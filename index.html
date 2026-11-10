@@ -208,6 +208,7 @@ button:disabled{
 }
 
 #raysCanvas{
+  will-change:opacity;
   mix-blend-mode:screen;
   left:-624px;
   top:0;
@@ -889,7 +890,7 @@ button:disabled{
   // The material graph is rendered as a WebGL shader so its rays, particles,
   // and triangle fields stay procedural instead of falling back to a static fan.
   function makeGL(canvas,fragment){
-    var gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:true});
+    var gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false,depth:false,stencil:false,powerPreference:'high-performance'});
     if(!gl)return null;
     var vs='attribute vec2 p; void main(){gl_Position=vec4(p,0.0,1.0);}';
     function compile(type,src){var sh=gl.createShader(type);gl.shaderSource(sh,src);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(sh));return sh;}
@@ -936,7 +937,7 @@ void main(){
   vec3 gold=mix(vec3(1.0,.5,.05),vec3(1.0,.76,.2),exp(-d*5.0));
   float dust=0.0;
   float particlePulse=smoothstep(1.52,1.61,tm)*(1.0-smoothstep(2.22,2.55,tm));
-  for(int i=0;i<32;i++){
+  if(particlePulse>.001)for(int i=0;i<32;i++){
     float fi=float(i);
     float ang=h(fi+2.0)*6.28318+tm*(.10+h(fi+8.0)*.15);
     float rad=mod(h(fi+4.0)*.78+tm*(.035+h(fi+9.0)*.035),.93);
@@ -963,7 +964,7 @@ void main(){
     float shrinkStart=h(fj+101.0)*.24;
     float shrink=1.0-smoothstep(shrinkStart,1.0,death);
     float size=(.008+h(fj+4.0)*.006)*shardSize*3.6*growth*shrink*(1.2+.6*exp(-age*1.4));
-    if(shrink>.005){
+    if(shrink>.005&&length(q-pos)<size*2.4+.004){
       float sd=chip(p,size*1.15,fj,exp(-age*1.3));
       float aa=1.3/r.y;float cov=1.0-smoothstep(-aa*.5,aa*.9,sd);
       float pieceAlpha=mix(.72,1.0,h(fj+33.0))*smoothstep(.0,.3,shrink);
@@ -997,10 +998,13 @@ void main(){
       }
     }
   }
+  window.__mob=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||Math.min(screen.width,screen.height)<700;
+  var isMobile=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||Math.min(screen.width,screen.height)<700;
   var rayGL=null;
   var rayGLInitialized=false;
   function initRayGL(){
     if(rayGLInitialized)return;
+    if(isMobile){el.raysCanvas.width=960;el.raysCanvas.height=400;}
     rayGLInitialized=true;
     rayGL=createRayGL();
     if(rayGL){
@@ -1053,8 +1057,11 @@ void main(){
     host.innerHTML='<div id="edgeGlowEl" style="position:absolute;inset:0;pointer-events:none;will-change:box-shadow"></div>';
     edgeGlowEl=host.firstChild;
   })();
+  var lastGlowT=-1;
   function animateEdgeRays(t,cop){
     if(!edgeGlowEl)return;
+    if(window.__mob&&Math.abs(t-lastGlowT)<1/30)return;
+    lastGlowT=t;
     var k=.2+.8*Math.max(0,Math.min(1,cop/.95));          // size shrinks over time
     var fl=1+.07*Math.sin(t*7.3)*Math.sin(t*2.9)+.05*Math.sin(t*13.1); // soft light flicker
     var q=k*fl;
@@ -1535,6 +1542,15 @@ void main(){
       if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
       e.preventDefault();
       play.click();
+    }
+  });
+
+  document.addEventListener('keydown',function(e){
+    if((e.key==='f'||e.key==='F'||e.code==='KeyF')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){
+      var tg=e.target&&e.target.tagName;
+      if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
+      e.preventDefault();
+      $('fullscreen').click();
     }
   });
 
