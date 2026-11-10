@@ -388,20 +388,64 @@ button:disabled{
   left:0;
   width:350px;
   transform-origin:0 50%;
-  background:linear-gradient(270deg,rgba(160,62,0,0) 0%,rgba(253,159,5,0.45) 55%,rgba(253,159,5,0.95) 100%);
+  background:linear-gradient(270deg,rgba(63,24,0,0) 0%,rgba(151,67,0,.55) 27%,rgba(255,173,20,.94) 73%,rgba(255,228,110,.98) 100%);
 }
 
 .side i.big{
-  top:32px;
-  height:14px;
-  box-shadow:0 0 12px rgba(253,159,5,0.55);
+  top:29px;
+  height:19px;
+  clip-path:polygon(0 30%,72% 30%,84% 0,100% 12%,88% 50%,100% 86%,78% 100%,68% 67%,0 67%);
+  box-shadow:0 0 12px rgba(253,159,5,.42);
 }
 
 .side i.small{
-  top:48px;
+  top:49px;
   height:3px;
-  background:#F2CA3E;
-  box-shadow:0 0 10px rgba(242,202,62,0.9);
+  background:linear-gradient(270deg,rgba(255,201,42,0) 0%,rgba(235,142,4,.68) 42%,#ffe483 100%);
+  box-shadow:0 0 8px rgba(255,205,58,.7);
+}
+
+.thunderLineTexture{
+  left:0;
+  top:0;
+  width:128px;
+  height:128px;
+  object-fit:fill;
+  opacity:0;
+  mix-blend-mode:screen;
+  filter:drop-shadow(0 0 4px rgba(255,179,40,.94)) drop-shadow(0 0 9px rgba(255,122,12,.68)) drop-shadow(0 0 16px rgba(255,105,0,.32));
+  z-index:5;
+  pointer-events:none;
+}
+#thunderL{top:-91px;transform:scaleX(-1);}
+#thunderR{top:-91px;}
+
+#textBack{
+  left:50%;
+  top:-54px;
+  width:0;
+  height:108px;
+  transform:translateX(-50%);
+  opacity:0;
+  z-index:0;
+  background:linear-gradient(180deg,rgba(22,10,0,0) 0%,rgba(30,13,1,.31) 12%,rgba(24,12,2,.37) 50%,rgba(30,13,1,.31) 88%,rgba(22,10,0,0) 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 5%,#000 95%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 5%,#000 95%,transparent 100%);
+  filter:blur(1.5px);
+  pointer-events:none;
+}
+
+#nameGlow{
+  left:50%;
+  top:0;
+  width:420px;
+  height:46px;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  z-index:3;
+  background:radial-gradient(ellipse at center,rgba(255,224,91,.47) 0%,rgba(255,190,47,.27) 36%,rgba(255,166,24,.09) 64%,transparent 79%);
+  filter:blur(8px);
+  pointer-events:none;
 }
 
 #brk{
@@ -411,8 +455,8 @@ button:disabled{
   width:0;
   opacity:0;
 }
-.bracketTexture{top:-27px;width:182px;height:134px;object-fit:fill;filter:drop-shadow(0 0 3px rgba(155,93,20,.9));pointer-events:none;z-index:2;}
-#brkTexL{left:-43px;transform:scaleX(-1);}
+.bracketTexture{top:-24.5px;width:128px;height:128px;object-fit:fill;filter:drop-shadow(0 0 3px rgba(155,93,20,.9));pointer-events:none;z-index:2;}
+#brkTexL{left:-31px;transform:scaleX(-1);}
 #brkTexR{transform:none;}
 
 .txt{
@@ -428,6 +472,7 @@ button:disabled{
 }
 
 #won{
+  z-index:4;
   font-size:22.5px;
   line-height:1;
   color:#ffffff;
@@ -435,10 +480,11 @@ button:disabled{
 }
 
 #name{
+  z-index:4;
   font-size:30px;
   line-height:1;
   color:#fff469;
-  text-shadow:0 2px 3px rgba(0,0,0,0.35);
+  text-shadow:0 2px 3px rgba(0,0,0,.35);
 }
 
 @media(max-width:600px){
@@ -535,6 +581,8 @@ button:disabled{
 
           <div id="row">
 
+            <div id="textBack" aria-hidden="true"></div>
+
             <div id="sideL" class="side">
               <div class="lines">
                 <i class="big"></i>
@@ -544,11 +592,15 @@ button:disabled{
 
             <div id="brk">
 
-              <img id="brkTexL" class="bracketTexture" src="T_UI_DelilahTreasureHuntUI_Bracket_Thunder_64_Render.png" alt="" aria-hidden="true">
-              <img id="brkTexR" class="bracketTexture" src="T_UI_DelilahTreasureHuntUI_Bracket_Thunder_64_Render.png" alt="" aria-hidden="true">
+              <img id="brkTexL" class="bracketTexture" src="T_UI_DelilahTreasureHuntUI_Bracket_Thunder_64_Render_HQ.png" alt="" aria-hidden="true">
+              <img id="brkTexR" class="bracketTexture" src="T_UI_DelilahTreasureHuntUI_Bracket_Thunder_64_Render_HQ.png" alt="" aria-hidden="true">
 
             </div>
 
+            <img id="thunderL" class="thunderLineTexture" src="T_UI_DelilahTreasureHuntUI_ThunderLine_Gold_Thin_HQ.png" alt="" aria-hidden="true">
+            <img id="thunderR" class="thunderLineTexture" src="T_UI_DelilahTreasureHuntUI_ThunderLine_Gold_Thin_HQ.png" alt="" aria-hidden="true">
+
+            <div id="nameGlow" aria-hidden="true"></div>
             <div id="won" class="txt">YOU FOUND</div>
             <div id="name" class="txt">PIRATE SHOP ACCESS</div>
 
@@ -700,7 +752,8 @@ button:disabled{
     reward:$('reward'),row:$('row'),sideL:$('sideL'),sideR:$('sideR'),
     brk:$('brk'),
     brkTexL:$('brkTexL'),brkTexR:$('brkTexR'),
-    won:$('won'),name:$('name'),
+    won:$('won'),name:$('name'),nameGlow:$('nameGlow'),textBack:$('textBack'),
+    thunderL:$('thunderL'),thunderR:$('thunderR'),
     cRing:$('cRing'),cFlare:$('cFlare')
   };
 
@@ -1064,13 +1117,19 @@ button:disabled{
     el.brk.style.transform='translateY('+ev(a.brkTy,t)+'px)';
     el.brk.style.width=borderW+'px';
     el.brk.style.left=(-borderW/2)+'px';
-    el.brkTexR.style.left=(borderW-140)+'px';
+    el.brkTexR.style.left=(borderW-97)+'px';
+    el.textBack.style.width=Math.max(0,borderW-90)+'px';
+    el.textBack.style.opacity=String(Math.max(ev(a.brkOp,t),ev(a.nameOp,t))*.78);
+    var thunderCenter=borderW/2-4;
+    el.thunderL.style.left=(-thunderCenter-64)+'px';
+    el.thunderR.style.left=(thunderCenter-64)+'px';
+    el.thunderL.style.opacity=el.thunderR.style.opacity=String(ev(a.gA,t));
 
     var bsc=ev(a.brkScale,t);
     var gA=ev(a.gA,t);
     var gcol=toS(ev(a.gR,t))+','+toS(ev(a.gG,t))+','+toS(ev(a.gB,t));
     var bf='drop-shadow(0 0 '+(6*bsc)+'px rgba(155,93,20,'+(0.9*gA)+'))';
-    el.brkTexL.style.filter=el.brkTexR.style.filter=bf;
+    el.brkTexL.style.filter=el.brkTexR.style.filter=bf+' drop-shadow(0 0 2px rgba(255,226,143,.86)) drop-shadow(0 0 7px rgba(255,139,17,.72)) drop-shadow(0 0 14px rgba(255,91,0,.32))';
 
     var ws=ev(a.wonS,t);
     el.won.style.opacity=ev(a.wonOp,t);
@@ -1084,7 +1143,9 @@ button:disabled{
     var nameGold=Math.max(0,Math.min(1,(t-2.24)/.28));
     var nameR=255,nameG=Math.round(255-(255-230)*nameGold),nameB=Math.round(255-(255-36)*nameGold);
     el.name.style.color='rgb('+nameR+','+nameG+','+nameB+')';
-    el.name.style.textShadow='0 0 8px rgba(255,218,73,'+(0.34*(1-nameGold)+0.12)+'),0 2px 3px rgba(0,0,0,.35)';
+    el.name.style.textShadow='0 2px 3px rgba(0,0,0,.35)';
+    el.nameGlow.style.opacity=String(ev(a.nameOp,t)*.78);
+    el.nameGlow.style.transform='translate(-50%,-50%) translateY('+(CONFIG.nameY+ev(a.nameTy,t)-8)+'px)';
     el.brkTexL.style.opacity=el.brkTexR.style.opacity=String(ev(a.gA,t));
   }
 
