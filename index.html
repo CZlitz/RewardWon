@@ -1,6 +1,6 @@
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -19,16 +19,16 @@
 }
 
 :root{
-  --bg:#121019;
-  --panel:#1c1726;
-  --fg:#efeaf6;
-  --muted:#a299b3;
-  --line:#383145;
+  --bg:#080808;
+  --panel:#101010;
+  --fg:#f2f2f2;
+  --muted:#a0a0a0;
+  --line:#292929;
   --accent:#f2b933;
   --accent-fg:#1b1405;
 
   --display:'Burbank Big Regular Black',Impact,sans-serif;
-  --body:'Barlow',system-ui,sans-serif;
+  --body:var(--display);
 
   color-scheme:dark;
 }
@@ -72,7 +72,7 @@ body{
 button{
   font:600 14px var(--body);
   color:var(--fg);
-  background:#262033;
+  background:#191919;
   border:1px solid var(--line);
   border-radius:6px;
   padding:8px 15px;
@@ -81,7 +81,7 @@ button{
   transition:background .15s ease,transform .1s ease;
 }
 
-button:hover{background:#342c45;}
+button:hover{background:#292929;}
 button:active{transform:scale(0.97);}
 
 button.primary{
@@ -124,7 +124,7 @@ button:disabled{
   width:35px;
   height:32px;
   padding:2px;
-  background:#262033;
+  background:#191919;
   border:1px solid var(--line);
   border-radius:6px;
   cursor:pointer;
@@ -135,10 +135,10 @@ button:disabled{
   min-height:32px;
   padding:5px 7px;
   color:var(--fg);
-  background:#262033;
+  background:#191919;
   border:1px solid var(--line);
   border-radius:6px;
-  font:12px monospace;
+  font:12px var(--display);
   text-transform:uppercase;
 }
 
@@ -146,10 +146,10 @@ button:disabled{
   min-height:32px;
   padding:5px 8px;
   color:var(--fg);
-  background:#262033;
+  background:#191919;
   border:1px solid var(--line);
   border-radius:6px;
-  font:12px var(--body);
+  font:12px var(--display);
   cursor:pointer;
 }
 
@@ -160,7 +160,7 @@ button:disabled{
 }
 
 .shortcut-hint kbd{
-  background:#2e283d;
+  background:#222;
   border:1px solid var(--line);
   padding:2px 6px;
   border-radius:4px;
@@ -173,7 +173,7 @@ button:disabled{
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:10px;
-  background:radial-gradient(120% 90% at 50% 40%,#2b2350 0%,#16122b 55%,#0b0918 100%);
+  background:radial-gradient(120% 90% at 50% 40%,#202020 0%,#121212 55%,#080808 100%);
   border:1px solid var(--line);
   box-shadow:0 8px 32px rgba(0,0,0,0.5);
 }
@@ -454,30 +454,30 @@ button:disabled{
 
 <div class="wrap">
 
-  <div class="toolbar" aria-label="Controles da animação">
+  <div class="toolbar" aria-label="Animation controls">
 
-    <button id="play" type="button" class="primary">Tocar</button>
-    <button id="sound" type="button" aria-pressed="true">Som: ligado</button>
-    <button id="fullscreen" type="button">Tela cheia</button>
+    <button id="play" type="button" class="primary">Play</button>
+    <button id="sound" type="button" aria-pressed="true">Sound: on</button>
+    <button id="fullscreen" type="button">Fullscreen</button>
 
-    <div class="backgrounds" role="group" aria-label="Personalização do fundo">
+    <div class="backgrounds" role="group" aria-label="Background settings">
 
-      <span>Fundo</span>
+      <span>Background</span>
 
       <label>
-        <input id="bgColor" type="color" value="#21183d" title="Escolher qualquer cor">
+        <input id="bgColor" type="color" value="#171717" title="Choose a color">
       </label>
 
-      <input id="bgHex" type="text" value="#21183D" maxlength="7" spellcheck="false" title="Código HEX da cor" aria-label="Código HEX da cor">
+      <input id="bgHex" type="text" value="#171717" maxlength="7" spellcheck="false" title="Color hex code" aria-label="Color hex code">
 
-      <select id="bgMode" aria-label="Estilo do fundo">
-        <option value="gradient" selected>Degradê</option>
-        <option value="solid">Cor sólida</option>
+      <select id="bgMode" aria-label="Background style">
+        <option value="gradient" selected>Gradient</option>
+        <option value="solid">Solid color</option>
       </select>
 
     </div>
 
-    <button id="record" type="button">Gravar animação</button>
+    <button id="record" type="button">Record animation</button>
 
     <span class="shortcut-hint"><kbd>Space</kbd> Play / Pause</span>
 
@@ -487,7 +487,7 @@ button:disabled{
 
   </div>
 
-  <div id="view" aria-label="Prévia da animação">
+  <div id="view" aria-label="Animation preview">
 
     <div id="stage">
 
@@ -525,8 +525,6 @@ button:disabled{
             </div>
 
             <div id="circ">
-              <i id="cCore"></i>
-              <i id="cRays"></i>
               <i id="cRing"></i>
               <i id="cFlare"></i>
             </div>
@@ -702,7 +700,7 @@ button:disabled{
     reward:$('reward'),row:$('row'),sideL:$('sideL'),sideR:$('sideR'),
     brk:$('brk'),
     brkTexL:$('brkTexL'),brkTexR:$('brkTexR'),
-    won:$('won'),name:$('name'),cCore:$('cCore'),cRays:$('cRays'),
+    won:$('won'),name:$('name'),
     cRing:$('cRing'),cFlare:$('cFlare')
   };
 
@@ -811,7 +809,7 @@ button:disabled{
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,1);
       gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,image);
     };
-    image.onerror=function(){console.warn('Não foi possível carregar a textura do shader:',src);};
+    image.onerror=function(){console.warn('Could not load shader texture:',src);};
     image.src=src;
     return texture;
   }
@@ -838,7 +836,7 @@ button:disabled{
     catch(firstError){
       try{return makeGL(el.raysCanvas,source.replace('precision highp float','precision mediump float'));}
       catch(secondError){
-        console.warn('WebGL indisponível; usando fallback Canvas2D.',secondError);
+        console.warn('WebGL unavailable; using Canvas2D fallback.',secondError);
         return null;
       }
     }
@@ -852,7 +850,7 @@ button:disabled{
     if(rayGL){
       try{loadGLTexture(rayGL.gl,'T_UI_DelilahTreasureHuntUI_Noise_ParticlesRGB.png',0);}
       catch(error){
-        console.warn('Textura dos god rays indisponível; controles seguem ativos.',error);
+        console.warn('God ray texture unavailable; controls remain active.',error);
         rayGL=null;
       }
     }
@@ -881,7 +879,7 @@ button:disabled{
       gl.uniform1i(rayGL.uniform('noiseTex'),0);
       gl.drawArrays(gl.TRIANGLES,0,6);
     }catch(error){
-      console.warn('God rays desativados; animação principal continua.',error);
+      console.warn('God rays disabled; the main animation will continue.',error);
       rayGL=null;
     }
   }
@@ -1012,31 +1010,12 @@ button:disabled{
     var circVisible=t<2.367;
     var co=circVisible?ev(a.cAlpha,t):0;
     el.circ.style.opacity=co;
-    el.cCore.style.display=co>.005?'block':'none';
-    el.cRays.style.display=co>.005?'block':'none';
     el.cRing.style.display=co>.005?'block':'none';
     el.cFlare.style.display=co>.005?'block':'none';
 
     if(co>.005){
       var cs=ev(a.circS,t);
       el.circ.style.transform='scale('+cs+')';
-      var gr=ev(a.cGrow,t);
-      var rd=ev(a.cRD,t);
-      var rad=ev(a.cRad,t);
-      var core=Math.max(.05,Math.min(1.4,rad*(.35+.65*gr)/1.5));
-
-      el.cCore.style.background=
-        'radial-gradient(circle, rgba(255,235,90,1) 0%, rgba(255,235,90,.6) 38%, rgba(255,170,0,0) 70%)';
-      el.cCore.style.transform='scale('+core+')';
-      el.cCore.style.opacity=Math.min(1,.35+.15*rd);
-
-      el.cRays.style.background=
-        'repeating-conic-gradient(from 0deg, rgba(255,235,90,.95) 0deg, rgba(255,160,0,0) 7deg, rgba(255,235,90,.95) 14deg)';
-      el.cRays.style.webkitMaskImage='radial-gradient(circle,#000 0%,transparent 70%)';
-      el.cRays.style.maskImage='radial-gradient(circle,#000 0%,transparent 70%)';
-      el.cRays.style.transform='scale('+(core*1.1)+') rotate('+(t*20)+'deg)';
-      el.cRays.style.opacity=Math.min(1,rd/2)*.8;
-
       var rsz=Math.max(ev(a.cRingS,t),.001);
       var th=Math.max(2,Math.min(16,2+(ev(a.cRingT,t)+4)*2.2));
       el.cRing.style.transform='scale('+rsz+')';
@@ -1176,7 +1155,7 @@ button:disabled{
 
   $('sound').addEventListener('click',function(){
     soundOn=!soundOn;
-    $('sound').textContent='Som: '+(soundOn?'ligado':'desligado');
+    $('sound').textContent='Sound: '+(soundOn?'on':'off');
     $('sound').setAttribute('aria-pressed',String(soundOn));
     if(!soundOn){
       stopSounds();
@@ -1224,7 +1203,7 @@ button:disabled{
 
     if(preRollRemaining>0){
       preRollRemaining=Math.max(0,preRollRemaining-dt);
-      play.textContent='Abrindo baú...';
+      play.textContent='Opening chest...';
       renderIntroChest(preRollRemaining);
       if(preRollRemaining>0){
         requestAnimationFrame(tick);
@@ -1233,7 +1212,7 @@ button:disabled{
       renderIntroChest(0);
       if(soundOn&&soundUnlocked)startSoundsAt(0);
       setT(0);
-      play.textContent='Pausar';
+      play.textContent='Pause';
       last=ts;
       requestAnimationFrame(tick);
       return;
@@ -1244,7 +1223,7 @@ button:disabled{
 
     if(t>=cur.dur){
       playing=false;
-      play.textContent='Tocar de novo';
+      play.textContent='Play again';
       return;
     }
     requestAnimationFrame(tick);
@@ -1266,7 +1245,7 @@ button:disabled{
         stopSounds();
       }
       renderIntroChest(preRollRemaining);
-      play.textContent='Abrindo baú...';
+      play.textContent='Opening chest...';
     }else{
       preRollRemaining=0;
       renderIntroChest(0);
@@ -1276,7 +1255,7 @@ button:disabled{
       }else{
         stopSounds();
       }
-      play.textContent='Pausar';
+      play.textContent='Pause';
     }
     requestAnimationFrame(tick);
   }
@@ -1284,7 +1263,7 @@ button:disabled{
   play.addEventListener('click',function(){
     if(playing){
       playing=false;
-      play.textContent='Continuar';
+      play.textContent='Resume';
       stopSounds();
       return;
     }
@@ -1293,7 +1272,7 @@ button:disabled{
 
   scrub.addEventListener('input',function(){
     playing=false;
-    play.textContent='Continuar';
+    play.textContent='Resume';
     stopSounds();
     setT(scrub.value/1000*cur.dur);
   });
@@ -1320,7 +1299,7 @@ button:disabled{
   document.addEventListener('fullscreenchange',function(){
     fit();
     $('fullscreen').textContent=
-      document.fullscreenElement?'Sair da tela cheia':'Tela cheia';
+      document.fullscreenElement?'Exit fullscreen':'Fullscreen';
   });
 
   fit();
@@ -1341,25 +1320,25 @@ button:disabled{
   async function recordAnimation(){
     if(recording)return;
     if(!window.MediaRecorder){
-      alert('Seu navegador não suporta gravação de vídeo.');
+      alert('Your browser does not support video recording.');
       return;
     }
     if(!HTMLCanvasElement.prototype.captureStream){
-      alert('Seu navegador não suporta captura de vídeo.');
+      alert('Your browser does not support video capture.');
       return;
     }
     if(!window.html2canvas){
-      alert('Não foi possível carregar a biblioteca de captura. Verifique sua conexão com a internet.');
+      alert('Could not load the capture library. Check your internet connection.');
       return;
     }
     if(!window.AudioContext&&!window.webkitAudioContext){
-      alert('Seu navegador não suporta captura de áudio.');
+      alert('Your browser does not support audio capture.');
       return;
     }
 
     recording=true;
     recordBtn.disabled=true;
-    recordBtn.textContent='Preparando...';
+    recordBtn.textContent='Preparing...';
 
     var wasPlaying=playing;
     var oldT=t;
@@ -1408,7 +1387,7 @@ button:disabled{
       }
 
       if(!mimeType){
-        throw new Error('Nenhum formato de gravação compatível foi encontrado.');
+        throw new Error('No compatible recording format was found.');
       }
 
       var recorder=new MediaRecorder(videoStream,{
@@ -1425,7 +1404,7 @@ button:disabled{
       var stopped=new Promise(function(resolve,reject){
         recorder.onstop=resolve;
         recorder.onerror=function(e){
-          reject(e.error||new Error('Erro durante a gravação.'));
+          reject(e.error||new Error('Recording error.'));
         };
       });
 
@@ -1447,7 +1426,7 @@ button:disabled{
       setT(0);
       await drawFrame();
       recorder.start(100);
-      recordBtn.textContent='Gravando...';
+      recordBtn.textContent='Recording...';
       start(0,true);
 
       while(playing||preRollRemaining>0){
@@ -1478,8 +1457,8 @@ button:disabled{
 
       alert(
         isMp4
-        ? 'Gravação concluída! O vídeo foi salvo em MP4.'
-        : 'Gravação concluída! Seu navegador não oferece gravação MP4 pelo MediaRecorder, então o vídeo foi salvo em WebM.'
+        ? 'Recording complete! The video was saved as MP4.'
+        : 'Recording complete! Your browser does not support MP4 recording through MediaRecorder, so the video was saved as WebM.'
       );
 
       soundOn=oldSound;
@@ -1490,22 +1469,22 @@ button:disabled{
       }else{
         playing=false;
         setT(oldT);
-        play.textContent='Continuar';
+        play.textContent='Resume';
       }
 
     }catch(error){
-      console.error('Erro na gravação:',error);
-      alert('Não foi possível gravar a animação: '+(error.message||error));
+      console.error('Recording error:',error);
+      alert('Could not record the animation: '+(error.message||error));
       playing=false;
       stopSounds();
       setT(oldT);
       soundOn=oldSound;
-      play.textContent='Continuar';
+      play.textContent='Resume';
 
     }finally{
       recording=false;
       recordBtn.disabled=false;
-      recordBtn.textContent='Gravar animação';
+      recordBtn.textContent='Record animation';
     }
   }
 
