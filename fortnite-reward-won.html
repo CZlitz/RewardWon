@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>Fortnite Reward Won - Supreme Tier Preview</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&family=Barlow:wght@400;600&display=swap">
+
+<style>
+@font-face{
+  font-family:'Burbank Big Condensed';
+  src:url('./burbankbigcondensed_black.otf') format('opentype');
+  font-style:normal;
+  font-weight:900;
+  font-display:block;
+}
+
+:root{
+  --bg:#121019;
+  --panel:#1c1726;
+  --fg:#efeaf6;
+  --muted:#a299b3;
+  --line:#383145;
+  --accent:#f2b933;
+  --accent-fg:#1b1405;
+
+  --display:'Burbank Big Condensed','Barlow Condensed','Arial Narrow',Impact,sans-serif;
+  --body:'Barlow',system-ui,sans-serif;
+
+  color-scheme:dark;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--body);
+  font-size:15px;
+  line-height:1.5;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+.wrap{
+  max-width:1240px;
+  margin:0 auto;
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 16px;
+  box-shadow:0 4px 18px rgba(0,0,0,0.35);
+}
+
+button{
+  font:600 14px var(--body);
+  color:var(--fg);
+  background:#262033;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:8px 15px;
+  min-height:38px;
+  cursor:pointer;
+  transition:background .15s ease, transform .1s ease;
+}
+button:hover{ background:#342c45; }
+button:active{ transform:scale(0.97); }
+button.primary{
+  background:var(--accent);
+  color:var(--accent-fg);
+  border-color:var(--accent);
+  font-weight:700;
+}
+button.primary:hover{ background:#ffd04a; }
+button:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+
+.backgrounds{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding-left:10px;
+  border-left:1px solid var(--line);
+  color:var(--muted);
+  font-size:13px;
+}
+
+.swatch{
+  width:24px;
+  min-width:24px;
+  height:24px;
+  min-height:24px;
+  padding:0;
+  border-radius:50%;
+  border:2px solid #554e63;
+}
+.swatch[data-bg="purple"]{background:#21183d}
+.swatch[data-bg="black"]{background:#08080c}
+.swatch[data-bg="blue"]{background:#102b50}
+.swatch[data-bg="gray"]{background:#444}
+.swatch.active{
+  border-color:#fff;
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.shortcut-hint{ font-size:12px; color:var(--muted); margin-left:8px; }
+.shortcut-hint kbd{
+  background:#2e283d;
+  border:1px solid var(--line);
+  padding:2px 6px;
+  border-radius:4px;
+  color:var(--fg);
+}
+
+/* Área de visualização (16:9) */
+#view{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:10px;
+  background:radial-gradient(120% 90% at 50% 40%, #2b2350 0%, #16122b 55%, #0b0918 100%);
+  border:1px solid var(--line);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+}
+#view:fullscreen{
+  width:100vw;
+  height:100vh;
+  aspect-ratio:auto;
+  border:0;
+  border-radius:0;
+}
+
+/* Palco 1920x1080 */
+#stage{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:1920px;
+  height:1080px;
+  transform-origin:center center;
+  pointer-events:none;
+}
+#stage *{
+  position:absolute;
+  box-sizing:border-box;
+}
+
+/*
+  Overlay_Root: SizeBox_0 (MaxDesiredWidth 672) x GodRays 800 de altura.
+  Posição/tamanho vêm do JSON; o encaixe na tela é controlado por CONFIG no script.
+*/
+#ov{
+  width:672px;
+  height:800px;
+  left:624px;
+  top:0;
+}
+
+/* Image_GodRays: 1920x800, centralizada no Overlay_Root */
+#raysCanvas{
+  left:-624px;
+  top:0;
+  width:1920px;
+  height:800px;
+  opacity:0;
+}
+
+/* Text_BigPrize: Burbank 97.5px, sem contorno */
+#big{
+  left:336px;
+  top:0;
+  width:0;
+  height:0;
+  opacity:0;
+}
+#bigTxt{
+  left:0;
+  top:0;
+  transform:translate(-50%,-50%);
+  font:900 97.5px/1 var(--display);
+  font-style:italic;
+  text-transform:uppercase;
+  white-space:nowrap;
+  color:rgba(255,244,105,0.38); /* no JSON a cor é 0.2 (cinza) e a sombra tem alpha 0.1: texto de fundo discreto */
+}
+
+/* VBox_Reward */
+#vbox{
+  left:0;
+  top:0;
+  width:672px;
+  height:800px;
+  transform-origin:336px 400px;
+}
+
+/* OverlayPrize 200x200 */
+#prize{
+  left:236px;
+  top:0;
+  width:200px;
+  height:200px;
+}
+
+/* Image_RewardBG (BasePrize): quadrado torto dourado claro (procedural) */
+#bg{
+  left:0;
+  top:0;
+  width:200px;
+  height:200px;
+}
+#bg svg{ left:0; top:0; width:200px; height:200px; overflow:visible; }
+#bg .plateImg{
+  left:0; top:0; width:200px; height:200px;
+  background-position:center; background-size:contain; background-repeat:no-repeat;
+}
+
+/* Image_Circles (Rift Burst) */
+#circ{
+  left:0;
+  top:0;
+  width:200px;
+  height:200px;
+  mix-blend-mode:screen;
+  opacity:0;
+}
+#circ i{
+  display:block;
+  left:0;
+  top:0;
+  width:200px;
+  height:200px;
+  border-radius:50%;
+}
+#cRing{ border:4px solid #ffe36a; box-shadow:0 0 16px rgba(255,170,30,.9); }
+#cFlare{ border-radius:0 !important; }
+#cFlare:before,#cFlare:after{
+  content:"";
+  left:0; right:0; top:50%;
+  height:4px;
+  background:linear-gradient(90deg,transparent,#fff0a0,transparent);
+  transform:translateY(-50%);
+}
+#cFlare:after{ transform:translateY(-50%) rotate(90deg); }
+
+/* Image_Reward: SizeBox_1 com HeightOverride 120 + ScaleBox ScaleToFitY */
+#reward{
+  left:50%;
+  top:50%;
+  height:120px;
+  width:auto;
+  display:block;
+  opacity:0;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.55));
+}
+
+/* HorizontalBox_2: centro da linha em (336, 190) dentro do VBox */
+#row{
+  left:336px;
+  top:190px;
+  width:0;
+  height:0;
+}
+
+/* Image_LeftSide / Image_RightSide: 350x80 (material SideBigLine) */
+.side{
+  width:350px;
+  height:80px;
+  top:-40px;
+  left:-175px;
+}
+.side .lines{ left:0; top:0; width:350px; height:80px; }
+.side i{
+  display:block;
+  left:0;
+  width:350px;
+  transform-origin:0 50%;
+  background:linear-gradient(270deg,
+    rgba(160,62,0,0) 0%,
+    rgba(253,159,5,0.45) 55%,
+    rgba(253,159,5,0.95) 100%);
+}
+.side i.big{ top:32px; height:14px; box-shadow:0 0 12px rgba(253,159,5,0.55); }
+.side i.small{ top:48px; height:3px; background:#F2CA3E; box-shadow:0 0 10px rgba(242,202,62,0.9); }
+
+/* Border_Brackets (BracketsSpecial) */
+#brk{
+  left:0;
+  top:-39.5px;
+  height:79px;
+  width:0;
+  opacity:0;
+}
+#centerGlow{
+  left:0; top:6px;
+  height:67px;
+  width:100%;
+  border-radius:50%;
+  pointer-events:none;
+}
+.brkSvg{
+  top:0;
+  width:30px;
+  height:79px;
+  overflow:visible;
+}
+
+/* Textos: SEM contorno preto. Só a sombra suave (ShadowOffset 0,2) do JSON. */
+.txt{
+  left:0;
+  top:0;
+  white-space:nowrap;
+  text-transform:uppercase;
+  text-align:center;
+  letter-spacing:0;
+}
+#won{
+  font:900 22.5px/1 var(--display);
+  color:#ffffff;
+  text-shadow:0 2px 3px rgba(0,0,0,0.35);
+}
+#name{
+  font:900 30px/1 var(--display);
+  color:#fff469;
+  text-shadow:0 2px 3px rgba(0,0,0,0.35);
+}
+
+@media(max-width:600px){
+  .wrap{padding:8px}
+  .toolbar{gap:6px;padding:8px}
+  .backgrounds{padding-left:4px}
+  .shortcut-hint{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="toolbar" aria-label="Controles da animação">
+    <button id="play" type="button" class="primary">Tocar</button>
+    <button id="sound" type="button" aria-pressed="true">Som: ligado</button>
+    <button id="fullscreen" type="button">Tela cheia</button>
+
+    <div class="backgrounds" role="group" aria-label="Cor do fundo">
+      <span>Fundo</span>
+      <button type="button" class="swatch active" data-bg="purple" title="Roxo"></button>
+      <button type="button" class="swatch" data-bg="black" title="Preto"></button>
+      <button type="button" class="swatch" data-bg="blue" title="Azul"></button>
+      <button type="button" class="swatch" data-bg="gray" title="Cinza"></button>
+    </div>
+
+    <span class="shortcut-hint"><kbd>Space</kbd> Play / Pause</span>
+
+    <input id="scrub" type="range" min="0" max="1000" value="0" hidden>
+    <span id="time" hidden>0.00 / 6.60 s</span>
+    <select id="speed" hidden><option value="1" selected>1×</option></select>
+  </div>
+
+  <div id="view" aria-label="Prévia da animação">
+    <div id="stage">
+
+      <!-- Overlay_Root -->
+      <div id="ov">
+
+        <canvas id="raysCanvas" width="1920" height="800"></canvas>
+
+        <!-- Text_BigPrize -->
+        <div id="big"><div id="bigTxt">PIRATE SHOP ACESS</div></div>
+
+        <!-- VBox_Reward -->
+        <div id="vbox">
+
+          <!-- OverlayPrize -->
+          <div id="prize">
+            <div id="bg">
+              <!-- Quadrado torto dourado claro. Se achar a textura original, use CONFIG.plateImage -->
+              <svg id="plateSvg" viewBox="0 0 200 200" aria-hidden="true">
+                <defs>
+                  <linearGradient id="plateFill" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#FFF0B8"/>
+                    <stop offset=".5" stop-color="#FFD66E"/>
+                    <stop offset="1" stop-color="#F2B232"/>
+                  </linearGradient>
+                  <linearGradient id="plateInner" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#FFF8D6" stop-opacity=".85"/>
+                    <stop offset="1" stop-color="#FFD66E" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <polygon points="30,26 172,14 186,168 16,182" fill="url(#plateFill)" stroke="#F7D170" stroke-width="4" stroke-linejoin="miter"/>
+                <polygon points="42,38 164,28 174,100 34,108" fill="url(#plateInner)"/>
+                <polygon points="30,26 172,14 186,168 16,182" fill="none" stroke="#B9721A" stroke-width="1.5" stroke-opacity=".55" transform="translate(0,0)"/>
+              </svg>
+              <div class="plateImg" id="plateImg" style="display:none"></div>
+            </div>
+
+            <div id="circ">
+              <i id="cCore"></i>
+              <i id="cRays"></i>
+              <i id="cRing"></i>
+              <i id="cFlare"></i>
+            </div>
+
+            <img id="reward" src="T_UI_Delilah_ItemShop_Token_L.png" alt="">
+          </div>
+
+          <!-- HorizontalBox_2 -->
+          <div id="row">
+
+            <div id="sideL" class="side"><div class="lines"><i class="big"></i><i class="small"></i></div></div>
+
+            <div id="brk">
+              <div id="centerGlow"></div>
+              <svg id="brkL" class="brkSvg" viewBox="0 0 30 80" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z" fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
+                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26" fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
+              </svg>
+              <svg id="brkR" class="brkSvg" viewBox="0 0 30 80" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleX(-1)">
+                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z" fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
+                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26" fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
+              </svg>
+              <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+                <defs>
+                  <linearGradient id="brkGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#F89F10"/>
+                    <stop offset="1" stop-color="#EFBE53"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <div id="won" class="txt">YOU FOUND</div>
+            <div id="name" class="txt">PIRATE SHOP ACESS</div>
+
+            <div id="sideR" class="side"><div class="lines"><i class="big"></i><i class="small"></i></div></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<audio id="sChest" src="MX_S43_PirateChest_Tier_1_STNG_EQ.wav" preload="auto"></audio>
+<audio id="sBanner" src="SFX_Treasure_Banner_Gold_Tier_NoRamp_V4.wav" preload="auto"></audio>
+
+<script>
+(function(){
+
+  /* ===================================================================
+     CONFIG: ajustes finos (tudo em px do palco 1920x1080)
+     =================================================================== */
+  var CONFIG = {
+    originY: 30,        // desce/sobe a animação inteira (aumente se cortar em cima)
+    wonY: -15,         // posição vertical de "YOU FOUND" dentro da faixa
+    nameY: 11,          // posição vertical do nome do prêmio dentro da faixa
+    bigY: 95,           // posição vertical do texto gigante de fundo
+    plateImage: null,   // ex.: 'T_UI_..._BasePrize_xxx.png' quando achar a textura original
+    plateRotate: 0      // graus extras no quadrado torto
+  };
+
+  /* ===================================================================
+     Keyframes extraídos do Appear_Supreme (WBP_DelilahTreasureHunt_RewardWon)
+     Formato: [tempo_em_segundos, valor]
+     =================================================================== */
+  var SUP = {
+    dur: 6.6,
+
+    rootOp:  [[0,0],[.517,1]],
+
+    // VBox_Reward
+    vboxOp:  [[0,0],[.133,1],[1.05,1]],
+    vboxTx:  [[0,0],[1.733,0],[1.817,4.3917],[1.867,1.7179],[1.95,-2.702],[1.983,1.1137],[2.05,0]],
+    vboxTy:  [[0,250],[1.5,250],[1.733,250],[1.783,260.0034],[1.833,242.9221],[1.883,253.1032],[1.95,246.2252],[2.05,250],[5.5,250],[5.9,0]],
+    vboxS:   [[0,1.6],[5.5,1.6],[5.9,1]],
+
+    // OverlayPrize
+    prizeTy: [[0,300],[.3,94.5786],[.967,0],[5.35,0],[5.75,-15.7635],[5.9,0]],
+
+    // Image_RewardBG
+    bgS:     [[0,.5],[.517,1],[1.05,1],[1.55,1.2],[1.8,1]],
+    bgGlow:  [[1.6,6],[1.8,0],[2.133,.5]],
+    bgScaleP:[[1.8,1],[5.65,.9],[5.9,1]],
+
+    // Image_Reward (token)
+    rewardOp:[[1.55,0],[1.617,1]],
+    rewardS: [[1.55,.5],[1.667,2],[1.85,1]],
+    rewardTy:[[1.25,0],[1.35,-20]],
+
+    // HorizontalBox_2
+    rowTy:   [[1.717,-120],[2,20],[2.15,0]],
+    rowS:    [[1.717,0],[2,1]],
+
+    // Image_LeftSide / Image_RightSide
+    sRx:     [[1.867,20],[2.15,-20],[5.533,-20],[5.833,0]],
+    sLx:     [[1.867,-20],[2.15,20],[5.533,20],[5.833,0]],
+    sSx:     [[1.867,1.5],[2.15,1]],
+    sSy:     [[1.867,2],[2.15,1]],
+    sLshear: [[0,-20],[2.85,20]],
+    sRshear: [[0,20]],
+    fillBig: [[0,-.2],[1.867,-.2],[2.15,1]],
+    fillSmall:[[0,-.2],[2.1,-.2099],[2.3,.9752]],
+    glow:    [[0,.5],[2.1,.5],[2.3,1],[2.5,.5],[2.9,.5]],
+    hOffR:   [[2.067,0],[5.533,25],[5.833,0]],
+    hOffL:   [[2.067,0],[5.533,-25],[5.833,0]],
+
+    // Border_Brackets
+    brkOp:   [[0,0],[1.717,0],[2.167,1]],
+    brkW:    [[1.717,.7],[2.117,1.4]],
+    brkTy:   [[5.533,0],[5.683,6.387],[5.833,0]],
+    brkScale:[[2.067,1],[5.65,1.2],[5.833,1]],
+    // Text Glow Color (linear)
+    gR:      [[2.217,.9387],[2.517,1],[3.45,.8854]],
+    gG:      [[2.217,.602],[2.517,.7651],[3.45,.4091]],
+    gB:      [[2.217,0],[2.517,0],[3.45,.0673]],
+    gA:      [[2.067,0],[2.217,.8],[2.517,1],[3.45,1],[5.517,1],[5.65,.5],[5.833,1]],
+
+    // Text_PrizeWon
+    wonOp:   [[1.867,0],[1.967,1]],
+    wonS:    [[1.867,.5],[1.967,1.3],[2.067,1],[5.8,1.1]],
+    wonTy:   [[1.867,0],[1.967,30],[2.067,0],[5.517,0],[5.667,3.5332],[5.8,0]],
+
+    // Text_PrizeName
+    nameOp:  [[0,0],[1.867,0],[2.05,1]],
+    nameS:   [[1.867,.5],[2.05,1.5],[2.167,1],[5.517,1.2],[5.667,1.3],[5.833,1]],
+    nameTy:  [[1.867,0],[2.05,20],[2.167,0],[5.517,0],[5.667,11.553],[5.833,0]],
+    nameWhite:[[2.117,0],[2.167,1],[3.35,0]],
+
+    // Text_BigPrize (visível entre 1.6s e 5.233s)
+    bigOp:   [[0,0],[1.6,0],[3.083,1],[4.033,1],[5.233,0]],
+    bigTx:   [[1.6,-300],[3.083,0],[5.233,800]],
+    bigS:    [[0,1.6],[1.6,1.6],[5.233,1.5]],
+
+    // Image_GodRays (visível até 5.467s)
+    raysOp:  [[.733,0],[1.533,1],[4.867,1],[5.467,0]],
+    raysSy:  [[.733,.5],[1.533,2]],
+    raysTy:  [[1.533,-180],[2.033,-150]],
+    shineRadius:[[1.583,0],[2.033,2]],
+    rayIntens:[[1.583,1],[2.033,2]],
+
+    // Image_Circles (visível até 2.367s)
+    cAlpha:  [[1.033,.7628],[1.6,1],[2.367,0]],
+    cGrow:   [[1.033,.458],[1.6,.7368],[1.983,1]],
+    cRD:     [[1.033,.8995],[1.6,.9067],[1.8,1.9807],[2.367,.25]],
+    cRad:    [[1.033,2.5272],[1.5,1],[1.6,.7546],[1.983,.78]],
+    cRingA:  [[1.5,0],[1.55,1]],
+    cRingS:  [[1.5,0],[2.283,2.7225]],
+    cRingT:  [[1.5,-2],[1.6,-3.683],[2.283,2.0137]],
+    cFlare:  [[1.5,0],[1.55,1],[1.967,1.153],[2.367,1.4773]],
+    cFlareA: [[1.5,0],[1.6,2],[1.85,0]],
+    circS:   [[1.55,2],[2.283,7]]
+  };
+
+  var cur = SUP;
+
+  /* Interpolação cúbica com tangentes automáticas "clamped" (estilo UE Auto) */
+  function tan(k, i){
+    var n = k.length;
+    if(i <= 0 || i >= n - 1) return 0;
+    var a = (k[i][1] - k[i-1][1]) / (k[i][0] - k[i-1][0]);
+    var b = (k[i+1][1] - k[i][1]) / (k[i+1][0] - k[i][0]);
+    if(a * b <= 0) return 0;
+    return 2 * a * b / (a + b);
+  }
+
+  function ev(k, t){
+    if(!k || !k.length) return 0;
+    if(t <= k[0][0]) return k[0][1];
+    var n = k.length;
+    if(t >= k[n-1][0]) return k[n-1][1];
+    for(var i = 1; i < n; i++){
+      if(t <= k[i][0]){
+        var p0 = k[i-1], p1 = k[i];
+        var dt = p1[0] - p0[0];
+        var u = (t - p0[0]) / dt;
+        var m0 = tan(k, i-1) * dt;
+        var m1 = tan(k, i) * dt;
+        var u2 = u*u, u3 = u2*u;
+        return (2*u3 - 3*u2 + 1) * p0[1] + (u3 - 2*u2 + u) * m0 +
+               (-2*u3 + 3*u2) * p1[1] + (u3 - u2) * m1;
+      }
+    }
+    return k[n-1][1];
+  }
+
+  function $(id){ return document.getElementById(id); }
+
+  // Linear (UE) -> sRGB (tela)
+  function toS(v){
+    v = Math.max(0, Math.min(1, v));
+    var s = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1/2.4) - 0.055;
+    return Math.round(s * 255);
+  }
+
+  var el = {
+    ov: $('ov'),
+    raysCanvas: $('raysCanvas'),
+    big: $('big'),
+    bigTxt: $('bigTxt'),
+    vbox: $('vbox'),
+    prize: $('prize'),
+    bg: $('bg'),
+    circ: $('circ'),
+    reward: $('reward'),
+    row: $('row'),
+    sideL: $('sideL'),
+    sideR: $('sideR'),
+    brk: $('brk'),
+    brkL: $('brkL'),
+    brkR: $('brkR'),
+    centerGlow: $('centerGlow'),
+    won: $('won'),
+    name: $('name'),
+    cCore: $('cCore'),
+    cRays: $('cRays'),
+    cRing: $('cRing'),
+    cFlare: $('cFlare')
+  };
+
+  // Posição do overlay no palco (CONFIG.originY)
+  el.ov.style.top = CONFIG.originY + 'px';
+
+  // Textura original do quadrado (quando existir)
+  if(CONFIG.plateImage){
+    $('plateSvg').style.display = 'none';
+    var pi = $('plateImg');
+    pi.style.display = 'block';
+    pi.style.backgroundImage = "url('" + CONFIG.plateImage + "')";
+  }
+
+  /* ===================================================================
+     Raios dourados + partículas + estilhaços (M_UI_DelilahTreasureHunt_GoldenRaysParticles)
+     A escala (2, 0.5→2) agora é aplicada via CSS, como no RenderTransform do JSON.
+     =================================================================== */
+  var ctx = el.raysCanvas.getContext('2d');
+  var R = 400;
+  var numRays = 22;
+
+  var particles = [];
+  for(var p = 0; p < 48; p++){
+    particles.push({
+      angle: (p / 48) * Math.PI * 2 + (Math.sin(p * 3.7) * 0.4),
+      baseDist: 40 + (p * 15.3) % 360,
+      speed: 0.25 + (p % 5) * 0.15,
+      size: 2.2 + (p % 4) * 1.6,
+      phase: p * 1.1
+    });
+  }
+
+  var shards = [];
+  for(var s = 0; s < 16; s++){
+    shards.push({
+      angle: (s / 16) * Math.PI * 2 + (Math.cos(s * 2.3) * 0.2),
+      speed: 140 + (s % 4) * 55,
+      rotSpeed: 3 + (s % 3) * 2,
+      size: 14 + (s % 3) * 7,
+      color: s % 2 === 0 ? '#FFBD18' : '#FBEA65'
+    });
+  }
+
+  function renderRays(t, op){
+    ctx.clearRect(0, 0, 1920, 800);
+    if(op <= 0.005) return;
+
+    var inten = Math.min(1, ev(cur.rayIntens, t) / 2);
+    ctx.save();
+    ctx.globalAlpha = op;
+
+    var cx = 960, cy = 400;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(t * 0.12);
+    for(var i = 0; i < numRays; i++){
+      var a0 = (i / numRays) * Math.PI * 2;
+      var a1 = a0 + (Math.PI / numRays) * 0.55;
+      var grad = ctx.createRadialGradient(0, 0, 24, 0, 0, R);
+      grad.addColorStop(0, 'rgba(255,242,58,' + (0.75 * (0.4 + 0.6 * inten)) + ')');
+      grad.addColorStop(0.45, 'rgba(255,173,0,' + (0.45 * (0.4 + 0.6 * inten)) + ')');
+      grad.addColorStop(1, 'rgba(255,173,0,0)');
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, R, a0, a1);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+    ctx.restore();
+
+    ctx.save();
+    for(var j = 0; j < particles.length; j++){
+      var pt = particles[j];
+      var dist = (pt.baseDist + t * pt.speed * 70) % R;
+      var pAngle = pt.angle + t * 0.04;
+      var px = cx + Math.cos(pAngle) * dist;
+      var py = cy + Math.sin(pAngle) * dist;
+      var pAlpha = Math.sin((dist / R) * Math.PI) * (0.6 + 0.4 * Math.sin(t * 8 + pt.phase));
+      if(pAlpha <= 0) continue;
+      ctx.beginPath();
+      ctx.arc(px, py, pt.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,241,211,' + (pAlpha * op) + ')';
+      ctx.shadowColor = '#FFF1D3';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+    }
+    ctx.restore();
+
+    if(t >= 1.55 && t <= 5.0){
+      var burstT = t - 1.55;
+      var burstAlpha = Math.max(0, Math.min(1, burstT < 0.4 ? burstT / 0.4 : (3.45 - burstT) / 2.0));
+      ctx.save();
+      for(var k = 0; k < shards.length; k++){
+        var sh = shards[k];
+        var shDist = burstT * sh.speed;
+        var sx = cx + Math.cos(sh.angle) * shDist;
+        var sy = cy + Math.sin(sh.angle) * shDist * 0.8;
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.rotate(burstT * sh.rotSpeed);
+        ctx.beginPath();
+        ctx.moveTo(0, -sh.size);
+        ctx.lineTo(sh.size * 0.6, sh.size * 0.7);
+        ctx.lineTo(-sh.size * 0.6, sh.size * 0.7);
+        ctx.closePath();
+        ctx.fillStyle = sh.color;
+        ctx.globalAlpha = burstAlpha * op * 0.85;
+        ctx.shadowColor = sh.color;
+        ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    ctx.restore();
+  }
+
+  /* ===================================================================
+     Render por frame
+     Ordem de transformação do UMG: Scale -> Shear -> Rotate -> Translate
+     (em CSS isso é: translate() skewX() scale())
+     =================================================================== */
+  function render(t){
+    var a = cur;
+
+    el.ov.style.opacity = ev(a.rootOp, t);
+
+    /* --- God rays + texto gigante (fora do VBox) --- */
+    var rOp = t <= 5.467 ? ev(a.raysOp, t) : 0;
+    el.raysCanvas.style.opacity = rOp;
+    el.raysCanvas.style.transform =
+      'translateY(' + ev(a.raysTy, t) + 'px) scale(2,' + ev(a.raysSy, t) + ')';
+    renderRays(t, rOp);
+
+    var bigVisible = (t >= 1.6 && t < 5.233);
+    el.big.style.opacity = bigVisible ? ev(a.bigOp, t) : 0;
+    var bs = ev(a.bigS, t);
+    el.big.style.transform =
+      'translate(' + ev(a.bigTx, t) + 'px,' + CONFIG.bigY + 'px) scale(' + bs + ')';
+
+    /* --- VBox_Reward --- */
+    var vs = ev(a.vboxS, t);
+    el.vbox.style.opacity = ev(a.vboxOp, t);
+    el.vbox.style.transform =
+      'translate(' + ev(a.vboxTx, t) + 'px,' + ev(a.vboxTy, t) + 'px) scale(' + vs + ')';
+
+    /* --- OverlayPrize --- */
+    el.prize.style.transform = 'translateY(' + ev(a.prizeTy, t) + 'px)';
+
+    // Image_RewardBG: translação fixa (0,-8) do JSON
+    var bgs = ev(a.bgS, t) * ev(a.bgScaleP, t);
+    var glow = ev(a.bgGlow, t);
+    el.bg.style.transform =
+      'translate(0px,-8px) rotate(' + CONFIG.plateRotate + 'deg) scale(' + bgs + ')';
+    el.bg.style.filter =
+      'drop-shadow(0 0 ' + (14 + glow * 4) + 'px rgba(255,200,80,' + Math.min(0.95, 0.35 + glow * 0.1) + '))';
+
+    // Image_Circles (Rift Burst)
+    var circVisible = t < 2.367;
+    var co = circVisible ? ev(a.cAlpha, t) : 0;
+    el.circ.style.opacity = co;
+    if(co > 0.005){
+      var cs = ev(a.circS, t);
+      el.circ.style.transform = 'scale(' + cs + ')';
+
+      var gr = ev(a.cGrow, t);
+      var rd = ev(a.cRD, t);
+      var rad = ev(a.cRad, t);
+      var core = Math.max(0.05, Math.min(1.4, rad * (.35 + .65 * gr) / 1.5));
+
+      el.cCore.style.background =
+        'radial-gradient(circle, rgba(255,235,90,1) 0%, rgba(255,235,90,.6) 38%, rgba(255,170,0,0) 70%)';
+      el.cCore.style.transform = 'scale(' + core + ')';
+      el.cCore.style.opacity = Math.min(1, .35 + .15 * rd);
+
+      el.cRays.style.background =
+        'repeating-conic-gradient(from 0deg, rgba(255,235,90,.95) 0deg, rgba(255,160,0,0) 7deg, rgba(255,235,90,.95) 14deg)';
+      el.cRays.style.webkitMaskImage = 'radial-gradient(circle,#000 0%,transparent 70%)';
+      el.cRays.style.maskImage = 'radial-gradient(circle,#000 0%,transparent 70%)';
+      el.cRays.style.transform = 'scale(' + (core * 1.1) + ') rotate(' + (t * 20) + 'deg)';
+      el.cRays.style.opacity = Math.min(1, rd / 2) * .8;
+
+      var rsz = Math.max(ev(a.cRingS, t), .001);
+      var th = Math.max(2, Math.min(16, 2 + (ev(a.cRingT, t) + 4) * 2.2));
+      el.cRing.style.transform = 'scale(' + rsz + ')';
+      el.cRing.style.borderWidth = (th / Math.max(rsz, .3)) + 'px';
+      el.cRing.style.opacity = ev(a.cRingA, t);
+
+      var fl = ev(a.cFlare, t);
+      el.cFlare.style.transform = 'scale(' + (fl * 1.2) + ')';
+      el.cFlare.style.opacity = Math.max(0, Math.min(1, ev(a.cFlareA, t) / 2));
+    }
+
+    // Image_Reward: token (292x247 no JSON, mas o SizeBox força 120 de altura)
+    var rs = ev(a.rewardS, t);
+    el.reward.style.opacity = ev(a.rewardOp, t);
+    el.reward.style.transform =
+      'translate(-50%,-50%) translateY(' + ev(a.rewardTy, t) + 'px) scale(' + rs + ')';
+
+    /* --- HorizontalBox_2 --- */
+    var rr = ev(a.rowS, t);
+    el.row.style.transform = 'translateY(' + ev(a.rowTy, t) + 'px) scale(' + rr + ')';
+
+    // largura do Border_Brackets = (nome + padding 10+10) * DesiredSizeScale
+    var nameW = el.name.offsetWidth;
+    var borderW = (Math.max(nameW, el.won.offsetWidth) + 20) * ev(a.brkW, t);
+    var sideCx = borderW / 2 + 40 + 175;
+
+    // Faixas laterais (Fill Big / Fill Small / Glow / HorizontalOffset / shear)
+    var fb = Math.max(0, Math.min(1, (ev(a.fillBig, t) + .2) / 1.2));
+    var fsm = Math.max(0, Math.min(1, (ev(a.fillSmall, t) + .2) / 1.2));
+    var gl = ev(a.glow, t);
+    var sx = ev(a.sSx, t), sy = ev(a.sSy, t);
+
+    var rLines = el.sideR.firstElementChild;
+    var lLines = el.sideL.firstElementChild;
+
+    rLines.children[0].style.transform = 'scaleX(' + fb + ')';
+    rLines.children[1].style.transform = 'scaleX(' + fsm + ')';
+    lLines.children[0].style.transform = 'scaleX(' + fb + ')';
+    lLines.children[1].style.transform = 'scaleX(' + fsm + ')';
+    rLines.style.transform = 'translateX(' + ev(a.hOffR, t) + 'px)';
+    lLines.style.transform = 'translateX(' + ev(a.hOffL, t) + 'px)';
+
+    el.sideR.style.filter = el.sideL.style.filter =
+      'drop-shadow(0 ' + (6 * gl) + 'px rgba(253,159,5,.85))';
+
+    el.sideR.style.transform =
+      'translate(' + (sideCx + ev(a.sRx, t)) + 'px,0) skewX(' + ev(a.sRshear, t) + 'deg) scale(' + sx + ',' + sy + ')';
+    el.sideL.style.transform =
+      'translate(' + (-sideCx + ev(a.sLx, t)) + 'px,0) skewX(' + ev(a.sLshear, t) + 'deg) scale(' + (-sx) + ',' + sy + ')';
+
+    // Border_Brackets
+    el.brk.style.opacity = ev(a.brkOp, t);
+    el.brk.style.transform = 'translateY(' + ev(a.brkTy, t) + 'px)';
+    el.brk.style.width = borderW + 'px';
+    el.brk.style.left = (-borderW / 2) + 'px';
+    el.brkL.style.left = '0px';
+    el.brkR.style.left = (borderW - 30) + 'px';
+
+    var bsc = ev(a.brkScale, t);
+    var gA = ev(a.gA, t);
+    var gcol = toS(ev(a.gR, t)) + ',' + toS(ev(a.gG, t)) + ',' + toS(ev(a.gB, t));
+    var bf = 'drop-shadow(0 0 ' + (6 * bsc) + 'px rgba(155,93,20,' + (0.9 * gA) + '))';
+    el.brkL.style.filter = el.brkR.style.filter = bf;
+    el.centerGlow.style.background =
+      'radial-gradient(ellipse at center, rgba(' + gcol + ',' + (0.30 * gA) + ') 0%, rgba(220,113,27,' + (0.14 * gA) + ') 60%, transparent 100%)';
+
+    // Textos
+    var ws = ev(a.wonS, t);
+    el.won.style.opacity = ev(a.wonOp, t);
+    el.won.style.transform =
+      'translate(-50%,-50%) translateY(' + (CONFIG.wonY + ev(a.wonTy, t)) + 'px) scale(' + ws + ')';
+
+    var ns = ev(a.nameS, t);
+    var wh = ev(a.nameWhite, t);
+    el.name.style.opacity = ev(a.nameOp, t);
+    el.name.style.transform =
+      'translate(-50%,-50%) translateY(' + (CONFIG.nameY + ev(a.nameTy, t)) + 'px) scale(' + ns + ')';
+    // flash branco na revelação: FFF469 -> FFFFFF
+    el.name.style.color = 'rgb(255,' + Math.round(244 + 11 * wh) + ',' + Math.round(105 + 150 * wh) + ')';
+  }
+
+  /* ===================================================================
+     Playback & Sound
+     =================================================================== */
+  var t = 0;
+  var playing = false;
+  var last = 0;
+  var speed = 1;
+
+  var scrub = $('scrub');
+  var time = $('time');
+  var play = $('play');
+
+  var soundOn = true;
+  var soundUnlocked = false;
+  var preRollRemaining = 0;
+
+  var chest = $('sChest');
+  var soundTracks = [
+    { el: $('sBanner'), at: 0, started: false }
+  ];
+
+  function stopSounds(){
+    chest.pause();
+    soundTracks.forEach(function(s){
+      s.el.pause();
+      s.started = false;
+    });
+  }
+
+  function startChestSound(restart){
+    if(!soundOn || !soundUnlocked) return;
+    chest.playbackRate = speed;
+    if(restart){
+      try{ chest.currentTime = 0; }catch(e){}
+    }
+    chest.play().catch(function(){});
+  }
+
+  function startSoundsAt(pos){
+    if(!soundOn || !soundUnlocked){
+      stopSounds();
+      return;
+    }
+    soundTracks.forEach(function(s){
+      s.el.pause();
+      s.started = false;
+      s.el.playbackRate = speed;
+      var offset = pos - s.at;
+      if(offset >= 0 && offset < s.el.duration){
+        try{ s.el.currentTime = offset; }catch(e){}
+        s.started = true;
+        s.el.play().catch(function(){ s.started = false; });
+      }else{
+        try{ s.el.currentTime = 0; }catch(e){}
+      }
+    });
+  }
+
+  function updateSoundCues(pos){
+    if(!soundOn || !soundUnlocked) return;
+    soundTracks.forEach(function(s){
+      if(!s.started && pos >= s.at){
+        try{ s.el.currentTime = Math.max(0, pos - s.at); }catch(e){}
+        s.el.playbackRate = speed;
+        s.started = true;
+        s.el.play().catch(function(){ s.started = false; });
+      }
+    });
+  }
+
+  $('sound').addEventListener('click', function(){
+    soundOn = !soundOn;
+    $('sound').textContent = 'Som: ' + (soundOn ? 'ligado' : 'desligado');
+    $('sound').setAttribute('aria-pressed', String(soundOn));
+
+    if(!soundOn){
+      stopSounds();
+    }else if(playing){
+      soundUnlocked = true;
+      if(preRollRemaining > 0){
+        startChestSound(false);
+      }else{
+        startSoundsAt(t);
+      }
+    }
+  });
+
+  function setT(v){
+    t = Math.max(0, Math.min(cur.dur, v));
+    render(t);
+    scrub.value = Math.round(t / cur.dur * 1000);
+    time.textContent = t.toFixed(2) + ' / ' + cur.dur.toFixed(2) + ' s';
+  }
+
+  function tick(ts){
+    if(!playing) return;
+    if(!last) last = ts;
+    var dt = (ts - last) / 1000 * speed;
+    last = ts;
+
+    // Pre-roll do baú de 2.5 segundos
+    if(preRollRemaining > 0){
+      preRollRemaining = Math.max(0, preRollRemaining - dt);
+      play.textContent = 'Abrindo baú...';
+      if(preRollRemaining > 0){
+        requestAnimationFrame(tick);
+        return;
+      }
+      setT(0);
+      play.textContent = 'Pausar';
+      last = ts;
+      requestAnimationFrame(tick);
+      return;
+    }
+
+    setT(t + dt);
+    updateSoundCues(t);
+
+    if(t >= cur.dur){
+      playing = false;
+      play.textContent = 'Tocar de novo';
+      return;
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function start(from, allowSound){
+    var resumePreRoll = preRollRemaining > 0;
+    setT(from || 0);
+    playing = true;
+    last = 0;
+
+    if(allowSound){
+      soundUnlocked = true;
+      if((from || 0) <= 0.001){
+        if(!resumePreRoll){
+          preRollRemaining = 2.5;
+          startChestSound(true);
+        }else{
+          startChestSound(false);
+        }
+        startSoundsAt(-1);
+        play.textContent = 'Abrindo baú...';
+      }else{
+        preRollRemaining = 0;
+        startSoundsAt(t);
+        play.textContent = 'Pausar';
+      }
+    }else{
+      preRollRemaining = 0;
+      stopSounds();
+      play.textContent = 'Pausar';
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  play.addEventListener('click', function(){
+    if(playing){
+      playing = false;
+      play.textContent = 'Continuar';
+      stopSounds();
+      return;
+    }
+    start(t >= cur.dur - 0.01 ? 0 : t, true);
+  });
+
+  scrub.addEventListener('input', function(){
+    playing = false;
+    play.textContent = 'Continuar';
+    stopSounds();
+    setT(scrub.value / 1000 * cur.dur);
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.code === 'Space' || e.key === ' '){
+      e.preventDefault();
+      play.click();
+    }
+  });
+
+  // Escala do palco 1920x1080
+  var view = $('view');
+  var stage = $('stage');
+
+  function fit(){
+    var w = view.clientWidth;
+    var h = view.clientHeight;
+    var scale = Math.min(w / 1920, h / 1080);
+    stage.style.transform = 'translate(-50%,-50%) scale(' + scale + ')';
+  }
+
+  window.addEventListener('resize', fit);
+
+  document.addEventListener('fullscreenchange', function(){
+    fit();
+    $('fullscreen').textContent = document.fullscreenElement ? 'Sair da tela cheia' : 'Tela cheia';
+  });
+
+  fit();
+
+  $('fullscreen').addEventListener('click', function(){
+    if(!document.fullscreenElement){
+      if(view.requestFullscreen) view.requestFullscreen().catch(function(){});
+    }else if(document.exitFullscreen){
+      document.exitFullscreen();
+    }
+  });
+
+  var backgrounds = {
+    purple: 'radial-gradient(120% 90% at 50% 40%,#2b2350 0%,#16122b 55%,#0b0918 100%)',
+    black: 'radial-gradient(120% 90% at 50% 40%,#252525 0%,#101010 58%,#050505 100%)',
+    blue: 'radial-gradient(120% 90% at 50% 40%,#244b78 0%,#102b50 58%,#071323 100%)',
+    gray: 'radial-gradient(120% 90% at 50% 40%,#555 0%,#2a2a2a 58%,#111 100%)'
+  };
+
+  document.querySelectorAll('.swatch').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      view.style.background = backgrounds[btn.dataset.bg];
+      document.querySelectorAll('.swatch').forEach(function(b){
+        b.classList.toggle('active', b === btn);
+      });
+    });
+  });
+
+  if(document.fonts && document.fonts.load){
+    document.fonts.load("900 48px 'Burbank Big Condensed'").then(function(){ render(t); });
+  }
+
+  // Visualização inicial no clímax da revelação
+  setT(3.6);
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){
+    setTimeout(function(){
+      start(0, false);
+    }, 600);
+  }
+
+})();
+</script>
+
+</body>
+</html>
