@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -6,14 +7,14 @@
 
 <title>Fortnite Reward Won - Supreme Tier Preview</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&family=Barlow:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&display=swap">
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 @font-face{
-  font-family:'Burbank Big Condensed';
-  src:url('./burbankbigcondensed_black.otf') format('opentype');
+  font-family:'Burbank Big Regular Black';
+  src:url('./Burbank%20Big%20Regular%20Black.otf') format('opentype');
   font-style:normal;
   font-weight:900;
   font-display:block;
@@ -28,13 +29,13 @@
   --accent:#f2b933;
   --accent-fg:#1b1405;
 
-  --display:'Burbank Big Condensed','Barlow Condensed','Arial Narrow',Impact,sans-serif;
+  --display:'Burbank Big Regular Black',Impact,sans-serif;
   --body:'Barlow',system-ui,sans-serif;
 
   color-scheme:dark;
 }
 
-*{ box-sizing:border-box; }
+*{box-sizing:border-box;}
 
 body{
   margin:0;
@@ -79,11 +80,11 @@ button{
   padding:8px 15px;
   min-height:38px;
   cursor:pointer;
-  transition:background .15s ease, transform .1s ease;
+  transition:background .15s ease,transform .1s ease;
 }
 
-button:hover{ background:#342c45; }
-button:active{ transform:scale(0.97); }
+button:hover{background:#342c45;}
+button:active{transform:scale(0.97);}
 
 button.primary{
   background:var(--accent);
@@ -92,7 +93,7 @@ button.primary{
   font-weight:700;
 }
 
-button.primary:hover{ background:#ffd04a; }
+button.primary:hover{background:#ffd04a;}
 
 button:focus-visible{
   outline:3px solid var(--accent);
@@ -168,14 +169,13 @@ button:disabled{
   color:var(--fg);
 }
 
-/* Área de visualização (16:9) */
 #view{
   position:relative;
   width:100%;
   aspect-ratio:16/9;
   overflow:hidden;
   border-radius:10px;
-  background:radial-gradient(120% 90% at 50% 40%, #2b2350 0%, #16122b 55%, #0b0918 100%);
+  background:radial-gradient(120% 90% at 50% 40%,#2b2350 0%,#16122b 55%,#0b0918 100%);
   border:1px solid var(--line);
   box-shadow:0 8px 32px rgba(0,0,0,0.5);
 }
@@ -188,7 +188,6 @@ button:disabled{
   border-radius:0;
 }
 
-/* Palco 1920x1080 */
 #stage{
   position:absolute;
   left:50%;
@@ -204,9 +203,6 @@ button:disabled{
   box-sizing:border-box;
 }
 
-/*
-  Overlay_Root: SizeBox_0 (MaxDesiredWidth 672) x GodRays 800 de altura.
-*/
 #ov{
   width:672px;
   height:800px;
@@ -214,7 +210,6 @@ button:disabled{
   top:0;
 }
 
-/* Image_GodRays */
 #raysCanvas{
   left:-624px;
   top:0;
@@ -223,7 +218,6 @@ button:disabled{
   opacity:0;
 }
 
-/* Text_BigPrize */
 #big{
   left:336px;
   top:0;
@@ -236,14 +230,19 @@ button:disabled{
   left:0;
   top:0;
   transform:translate(-50%,-50%);
-  font:900 97.5px/1 var(--display);
-  font-style:italic;
+  font-family:var(--display);
+  font-size:97.5px;
+  font-weight:900;
+  font-style:normal;
+  font-stretch:normal;
+  line-height:1;
+  letter-spacing:0;
   text-transform:uppercase;
   white-space:nowrap;
+  text-align:center;
   color:rgba(255,244,105,0.38);
 }
 
-/* VBox_Reward */
 #vbox{
   left:0;
   top:0;
@@ -252,7 +251,6 @@ button:disabled{
   transform-origin:336px 400px;
 }
 
-/* OverlayPrize */
 #prize{
   left:236px;
   top:0;
@@ -260,7 +258,6 @@ button:disabled{
   height:200px;
 }
 
-/* Image_RewardBG */
 #bg{
   left:0;
   top:0;
@@ -286,7 +283,6 @@ button:disabled{
   background-repeat:no-repeat;
 }
 
-/* Image_Circles */
 #circ{
   left:0;
   top:0;
@@ -310,7 +306,7 @@ button:disabled{
   box-shadow:0 0 16px rgba(255,170,30,.9);
 }
 
-#cFlare{ border-radius:0 !important; }
+#cFlare{border-radius:0!important;}
 
 #cFlare:before,#cFlare:after{
   content:"";
@@ -326,7 +322,6 @@ button:disabled{
   transform:translateY(-50%) rotate(90deg);
 }
 
-/* Image_Reward */
 #reward{
   left:50%;
   top:50%;
@@ -337,7 +332,6 @@ button:disabled{
   filter:drop-shadow(0 8px 14px rgba(0,0,0,.55));
 }
 
-/* HorizontalBox_2 */
 #row{
   left:336px;
   top:190px;
@@ -345,7 +339,6 @@ button:disabled{
   height:0;
 }
 
-/* Image_LeftSide / Image_RightSide */
 .side{
   width:350px;
   height:80px;
@@ -365,10 +358,7 @@ button:disabled{
   left:0;
   width:350px;
   transform-origin:0 50%;
-  background:linear-gradient(270deg,
-    rgba(160,62,0,0) 0%,
-    rgba(253,159,5,0.45) 55%,
-    rgba(253,159,5,0.95) 100%);
+  background:linear-gradient(270deg,rgba(160,62,0,0) 0%,rgba(253,159,5,0.45) 55%,rgba(253,159,5,0.95) 100%);
 }
 
 .side i.big{
@@ -384,7 +374,6 @@ button:disabled{
   box-shadow:0 0 10px rgba(242,202,62,0.9);
 }
 
-/* Border_Brackets */
 #brk{
   left:0;
   top:-39.5px;
@@ -409,7 +398,6 @@ button:disabled{
   overflow:visible;
 }
 
-/* Textos */
 .txt{
   left:0;
   top:0;
@@ -417,16 +405,21 @@ button:disabled{
   text-transform:uppercase;
   text-align:center;
   letter-spacing:0;
+  font-family:var(--display);
+  font-weight:900;
+  font-style:normal;
 }
 
 #won{
-  font:900 22.5px/1 var(--display);
+  font-size:22.5px;
+  line-height:1;
   color:#ffffff;
   text-shadow:0 2px 3px rgba(0,0,0,0.35);
 }
 
 #name{
-  font:900 30px/1 var(--display);
+  font-size:30px;
+  line-height:1;
   color:#fff469;
   text-shadow:0 2px 3px rgba(0,0,0,0.35);
 }
@@ -450,7 +443,6 @@ button:disabled{
     <button id="sound" type="button" aria-pressed="true">Som: ligado</button>
     <button id="fullscreen" type="button">Tela cheia</button>
 
-    <!-- Personalização do fundo -->
     <div class="backgrounds" role="group" aria-label="Personalização do fundo">
 
       <span>Fundo</span>
@@ -459,15 +451,7 @@ button:disabled{
         <input id="bgColor" type="color" value="#21183d" title="Escolher qualquer cor">
       </label>
 
-      <input
-        id="bgHex"
-        type="text"
-        value="#21183D"
-        maxlength="7"
-        spellcheck="false"
-        title="Código HEX da cor"
-        aria-label="Código HEX da cor"
-      >
+      <input id="bgHex" type="text" value="#21183D" maxlength="7" spellcheck="false" title="Código HEX da cor" aria-label="Código HEX da cor">
 
       <select id="bgMode" aria-label="Estilo do fundo">
         <option value="gradient" selected>Degradê</option>
@@ -490,26 +474,21 @@ button:disabled{
 
     <div id="stage">
 
-      <!-- Overlay_Root -->
       <div id="ov">
 
         <canvas id="raysCanvas" width="1920" height="800"></canvas>
 
-        <!-- Text_BigPrize -->
         <div id="big">
           <div id="bigTxt">PIRATE SHOP ACESS</div>
         </div>
 
-        <!-- VBox_Reward -->
         <div id="vbox">
 
-          <!-- OverlayPrize -->
           <div id="prize">
 
             <div id="bg">
 
               <svg id="plateSvg" viewBox="0 0 200 200" aria-hidden="true">
-
                 <defs>
                   <linearGradient id="plateFill" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0" stop-color="#FFF0B8"/>
@@ -523,27 +502,9 @@ button:disabled{
                   </linearGradient>
                 </defs>
 
-                <polygon
-                  points="30,26 172,14 186,168 16,182"
-                  fill="url(#plateFill)"
-                  stroke="#F7D170"
-                  stroke-width="4"
-                  stroke-linejoin="miter"
-                />
-
-                <polygon
-                  points="42,38 164,28 174,100 34,108"
-                  fill="url(#plateInner)"
-                />
-
-                <polygon
-                  points="30,26 172,14 186,168 16,182"
-                  fill="none"
-                  stroke="#B9721A"
-                  stroke-width="1.5"
-                  stroke-opacity=".55"
-                />
-
+                <polygon points="30,26 172,14 186,168 16,182" fill="url(#plateFill)" stroke="#F7D170" stroke-width="4" stroke-linejoin="miter"/>
+                <polygon points="42,38 164,28 174,100 34,108" fill="url(#plateInner)"/>
+                <polygon points="30,26 172,14 186,168 16,182" fill="none" stroke="#B9721A" stroke-width="1.5" stroke-opacity=".55"/>
               </svg>
 
               <div class="plateImg" id="plateImg" style="display:none"></div>
@@ -561,7 +522,6 @@ button:disabled{
 
           </div>
 
-          <!-- HorizontalBox_2 -->
           <div id="row">
 
             <div id="sideL" class="side">
@@ -576,17 +536,13 @@ button:disabled{
               <div id="centerGlow"></div>
 
               <svg id="brkL" class="brkSvg" viewBox="0 0 30 80" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z"
-                  fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
-                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26"
-                  fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
+                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z" fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
+                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26" fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
               </svg>
 
               <svg id="brkR" class="brkSvg" viewBox="0 0 30 80" preserveAspectRatio="none" aria-hidden="true" style="transform:scaleX(-1)">
-                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z"
-                  fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
-                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26"
-                  fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
+                <path d="M29 1 H9 Q1 1 1 9 V71 Q1 79 9 79 H29 V69 H13 V11 H29 Z" fill="url(#brkGrad)" stroke="#F7D170" stroke-width="1.4"/>
+                <path d="M26 5 H10 Q5 5 5 10 V70 Q5 75 10 75 H26" fill="none" stroke="#EFBE53" stroke-width="1.2" opacity=".8"/>
               </svg>
 
               <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -625,10 +581,6 @@ button:disabled{
 <script>
 (function(){
 
-  /* ===================================================================
-     CONFIG: ajustes finos
-     =================================================================== */
-
   var CONFIG = {
     originY: 30,
     wonY: -15,
@@ -638,33 +590,22 @@ button:disabled{
     plateRotate: 0
   };
 
-  /* ===================================================================
-     Keyframes originais
-     =================================================================== */
-
   var SUP = {
     dur: 6.6,
-
     rootOp: [[0,0],[.517,1]],
-
     vboxOp: [[0,0],[.133,1],[1.05,1]],
     vboxTx: [[0,0],[1.733,0],[1.817,4.3917],[1.867,1.7179],[1.95,-2.702],[1.983,1.1137],[2.05,0]],
     vboxTy: [[0,250],[1.5,250],[1.733,250],[1.783,260.0034],[1.833,242.9221],[1.883,253.1032],[1.95,246.2252],[2.05,250],[5.5,250],[5.9,0]],
     vboxS: [[0,1.6],[5.5,1.6],[5.9,1]],
-
     prizeTy: [[0,300],[.3,94.5786],[.967,0],[5.35,0],[5.75,-15.7635],[5.9,0]],
-
     bgS: [[0,.5],[.517,1],[1.05,1],[1.55,1.2],[1.8,1]],
     bgGlow: [[1.6,6],[1.8,0],[2.133,.5]],
     bgScaleP: [[1.8,1],[5.65,.9],[5.9,1]],
-
     rewardOp: [[1.55,0],[1.617,1]],
     rewardS: [[1.55,.5],[1.667,2],[1.85,1]],
     rewardTy: [[1.25,0],[1.35,-20]],
-
     rowTy: [[1.717,-120],[2,20],[2.15,0]],
     rowS: [[1.717,0],[2,1]],
-
     sRx: [[1.867,20],[2.15,-20],[5.533,-20],[5.833,0]],
     sLx: [[1.867,-20],[2.15,20],[5.533,20],[5.833,0]],
     sSx: [[1.867,1.5],[2.15,1]],
@@ -676,36 +617,29 @@ button:disabled{
     glow: [[0,.5],[2.1,.5],[2.3,1],[2.5,.5],[2.9,.5]],
     hOffR: [[2.067,0],[5.533,25],[5.833,0]],
     hOffL: [[2.067,0],[5.533,-25],[5.833,0]],
-
     brkOp: [[0,0],[1.717,0],[2.167,1]],
     brkW: [[1.717,.7],[2.117,1.4]],
     brkTy: [[5.533,0],[5.683,6.387],[5.833,0]],
     brkScale: [[2.067,1],[5.65,1.2],[5.833,1]],
-
     gR: [[2.217,.9387],[2.517,1],[3.45,.8854]],
     gG: [[2.217,.602],[2.517,.7651],[3.45,.4091]],
     gB: [[2.217,0],[2.517,0],[3.45,.0673]],
     gA: [[2.067,0],[2.217,.8],[2.517,1],[3.45,1],[5.517,1],[5.65,.5],[5.833,1]],
-
     wonOp: [[1.867,0],[1.967,1]],
     wonS: [[1.867,.5],[1.967,1.3],[2.067,1],[5.8,1.1]],
     wonTy: [[1.867,0],[1.967,30],[2.067,0],[5.517,0],[5.667,3.5332],[5.8,0]],
-
     nameOp: [[0,0],[1.867,0],[2.05,1]],
     nameS: [[1.867,.5],[2.05,1.5],[2.167,1],[5.517,1.2],[5.667,1.3],[5.833,1]],
     nameTy: [[1.867,0],[2.05,20],[2.167,0],[5.517,0],[5.667,11.553],[5.833,0]],
     nameWhite: [[2.117,0],[2.167,1],[3.35,0]],
-
     bigOp: [[0,0],[1.6,0],[3.083,1],[4.033,1],[5.233,0]],
     bigTx: [[1.6,-300],[3.083,0],[5.233,800]],
     bigS: [[0,1.6],[1.6,1.6],[5.233,1.5]],
-
     raysOp: [[.733,0],[1.533,1],[4.867,1],[5.467,0]],
     raysSy: [[.733,.5],[1.533,2]],
     raysTy: [[1.533,-180],[2.033,-150]],
     shineRadius: [[1.583,0],[2.033,2]],
     rayIntens: [[1.583,1],[2.033,2]],
-
     cAlpha: [[1.033,.7628],[1.6,1],[2.367,0]],
     cGrow: [[1.033,.458],[1.6,.7368],[1.983,1]],
     cRD: [[1.033,.8995],[1.6,.9067],[1.8,1.9807],[2.367,.25]],
@@ -721,34 +655,27 @@ button:disabled{
   var cur = SUP;
 
   function tan(k,i){
-    var n = k.length;
-    if(i <= 0 || i >= n-1) return 0;
-
-    var a = (k[i][1]-k[i-1][1])/(k[i][0]-k[i-1][0]);
-    var b = (k[i+1][1]-k[i][1])/(k[i+1][0]-k[i][0]);
-
-    if(a*b <= 0) return 0;
-
+    var n=k.length;
+    if(i<=0||i>=n-1)return 0;
+    var a=(k[i][1]-k[i-1][1])/(k[i][0]-k[i-1][0]);
+    var b=(k[i+1][1]-k[i][1])/(k[i+1][0]-k[i][0]);
+    if(a*b<=0)return 0;
     return 2*a*b/(a+b);
   }
 
   function ev(k,t){
-    if(!k || !k.length) return 0;
-    if(t <= k[0][0]) return k[0][1];
-
-    var n = k.length;
-
-    if(t >= k[n-1][0]) return k[n-1][1];
+    if(!k||!k.length)return 0;
+    if(t<=k[0][0])return k[0][1];
+    var n=k.length;
+    if(t>=k[n-1][0])return k[n-1][1];
 
     for(var i=1;i<n;i++){
-      if(t <= k[i][0]){
+      if(t<=k[i][0]){
         var p0=k[i-1],p1=k[i];
         var dt=p1[0]-p0[0];
         var u=(t-p0[0])/dt;
-
         var m0=tan(k,i-1)*dt;
         var m1=tan(k,i)*dt;
-
         var u2=u*u,u3=u2*u;
 
         return (2*u3-3*u2+1)*p0[1]
@@ -757,13 +684,10 @@ button:disabled{
           +(u3-u2)*m1;
       }
     }
-
     return k[n-1][1];
   }
 
-  function $(id){
-    return document.getElementById(id);
-  }
+  function $(id){return document.getElementById(id);}
 
   function toS(v){
     v=Math.max(0,Math.min(1,v));
@@ -772,28 +696,12 @@ button:disabled{
   }
 
   var el={
-    ov:$('ov'),
-    raysCanvas:$('raysCanvas'),
-    big:$('big'),
-    bigTxt:$('bigTxt'),
-    vbox:$('vbox'),
-    prize:$('prize'),
-    bg:$('bg'),
-    circ:$('circ'),
-    reward:$('reward'),
-    row:$('row'),
-    sideL:$('sideL'),
-    sideR:$('sideR'),
-    brk:$('brk'),
-    brkL:$('brkL'),
-    brkR:$('brkR'),
-    centerGlow:$('centerGlow'),
-    won:$('won'),
-    name:$('name'),
-    cCore:$('cCore'),
-    cRays:$('cRays'),
-    cRing:$('cRing'),
-    cFlare:$('cFlare')
+    ov:$('ov'),raysCanvas:$('raysCanvas'),big:$('big'),bigTxt:$('bigTxt'),
+    vbox:$('vbox'),prize:$('prize'),bg:$('bg'),circ:$('circ'),
+    reward:$('reward'),row:$('row'),sideL:$('sideL'),sideR:$('sideR'),
+    brk:$('brk'),brkL:$('brkL'),brkR:$('brkR'),centerGlow:$('centerGlow'),
+    won:$('won'),name:$('name'),cCore:$('cCore'),cRays:$('cRays'),
+    cRing:$('cRing'),cFlare:$('cFlare')
   };
 
   el.ov.style.top=CONFIG.originY+'px';
@@ -805,10 +713,6 @@ button:disabled{
     pi.style.backgroundImage="url('"+CONFIG.plateImage+"')";
   }
 
-  /* ===================================================================
-     Personalização do fundo
-     =================================================================== */
-
   var bgColor=$('bgColor');
   var bgHex=$('bgHex');
   var bgMode=$('bgMode');
@@ -816,13 +720,10 @@ button:disabled{
 
   function hexToRgb(hex){
     hex=hex.replace('#','');
-
     if(hex.length===3){
       hex=hex.split('').map(function(c){return c+c;}).join('');
     }
-
-    if(!/^[0-9a-fA-F]{6}$/.test(hex)) return null;
-
+    if(!/^[0-9a-fA-F]{6}$/.test(hex))return null;
     return {
       r:parseInt(hex.substring(0,2),16),
       g:parseInt(hex.substring(2,4),16),
@@ -852,8 +753,7 @@ button:disabled{
 
   function applyBackground(){
     var rgb=hexToRgb(bgColor.value);
-
-    if(!rgb) return;
+    if(!rgb)return;
 
     var hex='#'+bgColor.value.replace('#','').toUpperCase();
     bgHex.value=hex;
@@ -864,7 +764,6 @@ button:disabled{
       var light=mixColor(rgb,.12);
       var middle=rgb;
       var dark=darkenColor(rgb,.48);
-
       view.style.background=
         'radial-gradient(120% 90% at 50% 40%, '+
         rgbString(light)+' 0%, '+
@@ -878,11 +777,8 @@ button:disabled{
 
   bgHex.addEventListener('input',function(){
     var rgb=hexToRgb(bgHex.value);
-
-    if(!rgb) return;
-
+    if(!rgb)return;
     var hex='#'+bgHex.value.replace('#','');
-
     bgColor.value=hex;
     applyBackground();
   });
@@ -895,14 +791,9 @@ button:disabled{
 
   applyBackground();
 
-  /* ===================================================================
-     Raios dourados + partículas + estilhaços
-     =================================================================== */
-
   var ctx=el.raysCanvas.getContext('2d');
   var R=400;
   var numRays=22;
-
   var particles=[];
 
   for(var p=0;p<48;p++){
@@ -929,14 +820,11 @@ button:disabled{
 
   function renderRays(t,op){
     ctx.clearRect(0,0,1920,800);
-
-    if(op<=.005) return;
+    if(op<=.005)return;
 
     var inten=Math.min(1,ev(cur.rayIntens,t)/2);
-
     ctx.save();
     ctx.globalAlpha=op;
-
     var cx=960,cy=400;
 
     ctx.save();
@@ -946,13 +834,10 @@ button:disabled{
     for(var i=0;i<numRays;i++){
       var a0=(i/numRays)*Math.PI*2;
       var a1=a0+(Math.PI/numRays)*.55;
-
       var grad=ctx.createRadialGradient(0,0,24,0,0,R);
-
       grad.addColorStop(0,'rgba(255,242,58,'+(.75*(.4+.6*inten))+')');
       grad.addColorStop(.45,'rgba(255,173,0,'+(.45*(.4+.6*inten))+')');
       grad.addColorStop(1,'rgba(255,173,0,0)');
-
       ctx.beginPath();
       ctx.moveTo(0,0);
       ctx.arc(0,0,R,a0,a1);
@@ -962,21 +847,16 @@ button:disabled{
     }
 
     ctx.restore();
-
     ctx.save();
 
     for(var j=0;j<particles.length;j++){
       var pt=particles[j];
-
       var dist=(pt.baseDist+t*pt.speed*70)%R;
       var pAngle=pt.angle+t*.04;
-
       var px=cx+Math.cos(pAngle)*dist;
       var py=cy+Math.sin(pAngle)*dist;
-
       var pAlpha=Math.sin((dist/R)*Math.PI)*(.6+.4*Math.sin(t*8+pt.phase));
-
-      if(pAlpha<=0) continue;
+      if(pAlpha<=0)continue;
 
       ctx.beginPath();
       ctx.arc(px,py,pt.size,0,Math.PI*2);
@@ -990,78 +870,52 @@ button:disabled{
 
     if(t>=1.55&&t<=5.0){
       var burstT=t-1.55;
-
-      var burstAlpha=Math.max(
-        0,
-        Math.min(1,burstT<.4?burstT/.4:(3.45-burstT)/2)
-      );
-
+      var burstAlpha=Math.max(0,Math.min(1,burstT<.4?burstT/.4:(3.45-burstT)/2));
       ctx.save();
 
       for(var k=0;k<shards.length;k++){
         var sh=shards[k];
-
         var shDist=burstT*sh.speed;
-
         var sx=cx+Math.cos(sh.angle)*shDist;
         var sy=cy+Math.sin(sh.angle)*shDist*.8;
 
         ctx.save();
         ctx.translate(sx,sy);
         ctx.rotate(burstT*sh.rotSpeed);
-
         ctx.beginPath();
         ctx.moveTo(0,-sh.size);
         ctx.lineTo(sh.size*.6,sh.size*.7);
         ctx.lineTo(-sh.size*.6,sh.size*.7);
         ctx.closePath();
-
         ctx.fillStyle=sh.color;
         ctx.globalAlpha=burstAlpha*op*.85;
         ctx.shadowColor=sh.color;
         ctx.shadowBlur=10;
         ctx.fill();
-
         ctx.restore();
       }
-
       ctx.restore();
     }
-
     ctx.restore();
   }
 
-  /* ===================================================================
-     Render por frame
-     =================================================================== */
-
   function render(t){
     var a=cur;
-
     el.ov.style.opacity=ev(a.rootOp,t);
-
     var rOp=t<=5.467?ev(a.raysOp,t):0;
-
     el.raysCanvas.style.opacity=rOp;
-
     el.raysCanvas.style.transform=
       'translateY('+ev(a.raysTy,t)+'px) scale(2,'+ev(a.raysSy,t)+')';
-
     renderRays(t,rOp);
 
     var bigVisible=(t>=1.6&&t<5.233);
-
     el.big.style.opacity=bigVisible?ev(a.bigOp,t):0;
-
     var bs=ev(a.bigS,t);
-
     el.big.style.transform=
       'translate('+ev(a.bigTx,t)+'px,'+CONFIG.bigY+'px) scale('+bs+')';
 
     var vs=ev(a.vboxS,t);
-
     el.vbox.style.opacity=ev(a.vboxOp,t);
-
     el.vbox.style.transform=
       'translate('+ev(a.vboxTx,t)+'px,'+ev(a.vboxTy,t)+'px) scale('+vs+')';
 
@@ -1069,175 +923,120 @@ button:disabled{
 
     var bgs=ev(a.bgS,t)*ev(a.bgScaleP,t);
     var glow=ev(a.bgGlow,t);
-
     el.bg.style.transform=
       'translate(0px,-8px) rotate('+CONFIG.plateRotate+'deg) scale('+bgs+')';
-
     el.bg.style.filter=
       'drop-shadow(0 0 '+(14+glow*4)+'px rgba(255,200,80,'+
       Math.min(.95,.35+glow*.1)+'))';
 
     var circVisible=t<2.367;
     var co=circVisible?ev(a.cAlpha,t):0;
-
     el.circ.style.opacity=co;
 
     if(co>.005){
       var cs=ev(a.circS,t);
-
       el.circ.style.transform='scale('+cs+')';
-
       var gr=ev(a.cGrow,t);
       var rd=ev(a.cRD,t);
       var rad=ev(a.cRad,t);
-
       var core=Math.max(.05,Math.min(1.4,rad*(.35+.65*gr)/1.5));
 
       el.cCore.style.background=
         'radial-gradient(circle, rgba(255,235,90,1) 0%, rgba(255,235,90,.6) 38%, rgba(255,170,0,0) 70%)';
-
       el.cCore.style.transform='scale('+core+')';
       el.cCore.style.opacity=Math.min(1,.35+.15*rd);
 
       el.cRays.style.background=
         'repeating-conic-gradient(from 0deg, rgba(255,235,90,.95) 0deg, rgba(255,160,0,0) 7deg, rgba(255,235,90,.95) 14deg)';
-
       el.cRays.style.webkitMaskImage='radial-gradient(circle,#000 0%,transparent 70%)';
       el.cRays.style.maskImage='radial-gradient(circle,#000 0%,transparent 70%)';
-
-      el.cRays.style.transform=
-        'scale('+(core*1.1)+') rotate('+(t*20)+'deg)';
-
+      el.cRays.style.transform='scale('+(core*1.1)+') rotate('+(t*20)+'deg)';
       el.cRays.style.opacity=Math.min(1,rd/2)*.8;
 
       var rsz=Math.max(ev(a.cRingS,t),.001);
       var th=Math.max(2,Math.min(16,2+(ev(a.cRingT,t)+4)*2.2));
-
       el.cRing.style.transform='scale('+rsz+')';
       el.cRing.style.borderWidth=(th/Math.max(rsz,.3))+'px';
       el.cRing.style.opacity=ev(a.cRingA,t);
 
       var fl=ev(a.cFlare,t);
-
       el.cFlare.style.transform='scale('+(fl*1.2)+')';
       el.cFlare.style.opacity=Math.max(0,Math.min(1,ev(a.cFlareA,t)/2));
     }
 
     var rs=ev(a.rewardS,t);
-
     el.reward.style.opacity=ev(a.rewardOp,t);
-
     el.reward.style.transform=
       'translate(-50%,-50%) translateY('+ev(a.rewardTy,t)+'px) scale('+rs+')';
 
     var rr=ev(a.rowS,t);
-
-    el.row.style.transform=
-      'translateY('+ev(a.rowTy,t)+'px) scale('+rr+')';
+    el.row.style.transform='translateY('+ev(a.rowTy,t)+'px) scale('+rr+')';
 
     var nameW=el.name.offsetWidth;
-
-    var borderW=
-      (Math.max(nameW,el.won.offsetWidth)+20)*ev(a.brkW,t);
-
+    var borderW=(Math.max(nameW,el.won.offsetWidth)+20)*ev(a.brkW,t);
     var sideCx=borderW/2+40+175;
-
     var fb=Math.max(0,Math.min(1,(ev(a.fillBig,t)+.2)/1.2));
     var fsm=Math.max(0,Math.min(1,(ev(a.fillSmall,t)+.2)/1.2));
-
     var gl=ev(a.glow,t);
     var sx=ev(a.sSx,t);
     var sy=ev(a.sSy,t);
 
     var rLines=el.sideR.firstElementChild;
     var lLines=el.sideL.firstElementChild;
-
     rLines.children[0].style.transform='scaleX('+fb+')';
     rLines.children[1].style.transform='scaleX('+fsm+')';
-
     lLines.children[0].style.transform='scaleX('+fb+')';
     lLines.children[1].style.transform='scaleX('+fsm+')';
-
     rLines.style.transform='translateX('+ev(a.hOffR,t)+'px)';
     lLines.style.transform='translateX('+ev(a.hOffL,t)+'px)';
 
     el.sideR.style.filter=el.sideL.style.filter=
       'drop-shadow(0 '+(6*gl)+'px rgba(253,159,5,.85))';
-
     el.sideR.style.transform=
-      'translate('+(sideCx+ev(a.sRx,t))+'px,0) skewX('+
-      ev(a.sRshear,t)+'deg) scale('+sx+','+sy+')';
-
+      'translate('+(sideCx+ev(a.sRx,t))+'px,0) skewX('+ev(a.sRshear,t)+'deg) scale('+sx+','+sy+')';
     el.sideL.style.transform=
-      'translate('+(-sideCx+ev(a.sLx,t))+'px,0) skewX('+
-      ev(a.sLshear,t)+'deg) scale('+(-sx)+','+sy+')';
+      'translate('+(-sideCx+ev(a.sLx,t))+'px,0) skewX('+ev(a.sLshear,t)+'deg) scale('+(-sx)+','+sy+')';
 
     el.brk.style.opacity=ev(a.brkOp,t);
-
     el.brk.style.transform='translateY('+ev(a.brkTy,t)+'px)';
-
     el.brk.style.width=borderW+'px';
     el.brk.style.left=(-borderW/2)+'px';
-
     el.brkL.style.left='0px';
     el.brkR.style.left=(borderW-30)+'px';
 
     var bsc=ev(a.brkScale,t);
     var gA=ev(a.gA,t);
-
-    var gcol=
-      toS(ev(a.gR,t))+','+
-      toS(ev(a.gG,t))+','+
-      toS(ev(a.gB,t));
-
+    var gcol=toS(ev(a.gR,t))+','+toS(ev(a.gG,t))+','+toS(ev(a.gB,t));
     var bf='drop-shadow(0 0 '+(6*bsc)+'px rgba(155,93,20,'+(0.9*gA)+'))';
-
     el.brkL.style.filter=el.brkR.style.filter=bf;
-
     el.centerGlow.style.background=
       'radial-gradient(ellipse at center, rgba('+gcol+','+
       (.30*gA)+') 0%, rgba(220,113,27,'+(.14*gA)+') 60%, transparent 100%)';
 
     var ws=ev(a.wonS,t);
-
     el.won.style.opacity=ev(a.wonOp,t);
-
     el.won.style.transform=
-      'translate(-50%,-50%) translateY('+
-      (CONFIG.wonY+ev(a.wonTy,t))+'px) scale('+ws+')';
+      'translate(-50%,-50%) translateY('+(CONFIG.wonY+ev(a.wonTy,t))+'px) scale('+ws+')';
 
     var ns=ev(a.nameS,t);
     var wh=ev(a.nameWhite,t);
-
     el.name.style.opacity=ev(a.nameOp,t);
-
     el.name.style.transform=
-      'translate(-50%,-50%) translateY('+
-      (CONFIG.nameY+ev(a.nameTy,t))+'px) scale('+ns+')';
-
+      'translate(-50%,-50%) translateY('+(CONFIG.nameY+ev(a.nameTy,t))+'px) scale('+ns+')';
     el.name.style.color=
-      'rgb(255,'+
-      Math.round(244+11*wh)+','+
-      Math.round(105+150*wh)+')';
+      'rgb(255,'+Math.round(244+11*wh)+','+Math.round(105+150*wh)+')';
   }
-
-  /* ===================================================================
-     Playback & Sound
-     =================================================================== */
 
   var t=0;
   var playing=false;
   var last=0;
   var speed=1;
-
   var scrub=$('scrub');
   var time=$('time');
   var play=$('play');
-
   var soundOn=true;
   var soundUnlocked=false;
   var preRollRemaining=0;
-
   var chest=$('sChest');
 
   var soundTracks=[
@@ -1246,7 +1045,6 @@ button:disabled{
 
   function stopSounds(){
     chest.pause();
-
     soundTracks.forEach(function(s){
       s.el.pause();
       s.started=false;
@@ -1254,14 +1052,11 @@ button:disabled{
   }
 
   function startChestSound(restart){
-    if(!soundOn||!soundUnlocked) return;
-
+    if(!soundOn||!soundUnlocked)return;
     chest.playbackRate=speed;
-
     if(restart){
       try{chest.currentTime=0;}catch(e){}
     }
-
     chest.play().catch(function(){});
   }
 
@@ -1270,22 +1065,15 @@ button:disabled{
       stopSounds();
       return;
     }
-
     soundTracks.forEach(function(s){
       s.el.pause();
       s.started=false;
       s.el.playbackRate=speed;
-
       var offset=pos-s.at;
-
       if(offset>=0&&offset<s.el.duration){
         try{s.el.currentTime=offset;}catch(e){}
-
         s.started=true;
-
-        s.el.play().catch(function(){
-          s.started=false;
-        });
+        s.el.play().catch(function(){s.started=false;});
       }else{
         try{s.el.currentTime=0;}catch(e){}
       }
@@ -1293,34 +1081,25 @@ button:disabled{
   }
 
   function updateSoundCues(pos){
-    if(!soundOn||!soundUnlocked) return;
-
+    if(!soundOn||!soundUnlocked)return;
     soundTracks.forEach(function(s){
       if(!s.started&&pos>=s.at){
         try{s.el.currentTime=Math.max(0,pos-s.at);}catch(e){}
-
         s.el.playbackRate=speed;
         s.started=true;
-
-        s.el.play().catch(function(){
-          s.started=false;
-        });
+        s.el.play().catch(function(){s.started=false;});
       }
     });
   }
 
   $('sound').addEventListener('click',function(){
     soundOn=!soundOn;
-
     $('sound').textContent='Som: '+(soundOn?'ligado':'desligado');
-
     $('sound').setAttribute('aria-pressed',String(soundOn));
-
     if(!soundOn){
       stopSounds();
     }else if(playing){
       soundUnlocked=true;
-
       if(preRollRemaining>0){
         startChestSound(false);
       }else{
@@ -1331,47 +1110,32 @@ button:disabled{
 
   function setT(v){
     t=Math.max(0,Math.min(cur.dur,v));
-
     render(t);
-
     scrub.value=Math.round(t/cur.dur*1000);
-
-    time.textContent=
-      t.toFixed(2)+' / '+cur.dur.toFixed(2)+' s';
+    time.textContent=t.toFixed(2)+' / '+cur.dur.toFixed(2)+' s';
   }
 
   function tick(ts){
-    if(!playing) return;
-
-    if(!last) last=ts;
-
+    if(!playing)return;
+    if(!last)last=ts;
     var dt=(ts-last)/1000*speed;
-
     last=ts;
 
     if(preRollRemaining>0){
       preRollRemaining=Math.max(0,preRollRemaining-dt);
-
       play.textContent='Abrindo baú...';
-
       if(preRollRemaining>0){
         requestAnimationFrame(tick);
         return;
       }
-
       setT(0);
-
       play.textContent='Pausar';
-
       last=ts;
-
       requestAnimationFrame(tick);
-
       return;
     }
 
     setT(t+dt);
-
     updateSoundCues(t);
 
     if(t>=cur.dur){
@@ -1379,21 +1143,17 @@ button:disabled{
       play.textContent='Tocar de novo';
       return;
     }
-
     requestAnimationFrame(tick);
   }
 
   function start(from,allowSound){
     var resumePreRoll=preRollRemaining>0;
-
     setT(from||0);
-
     playing=true;
     last=0;
 
     if(allowSound){
       soundUnlocked=true;
-
       if((from||0)<=.001){
         if(!resumePreRoll){
           preRollRemaining=2.5;
@@ -1401,9 +1161,7 @@ button:disabled{
         }else{
           startChestSound(false);
         }
-
         startSoundsAt(-1);
-
         play.textContent='Abrindo baú...';
       }else{
         preRollRemaining=0;
@@ -1415,7 +1173,6 @@ button:disabled{
       stopSounds();
       play.textContent='Pausar';
     }
-
     requestAnimationFrame(tick);
   }
 
@@ -1426,7 +1183,6 @@ button:disabled{
       stopSounds();
       return;
     }
-
     start(t>=cur.dur-.01?0:t,true);
   });
 
@@ -1439,34 +1195,25 @@ button:disabled{
 
   document.addEventListener('keydown',function(e){
     if(e.code==='Space'||e.key===' '){
-      if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT') return;
-
+      if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
       e.preventDefault();
       play.click();
     }
   });
-
-  /* ===================================================================
-     Escala do palco
-     =================================================================== */
 
   var stage=$('stage');
 
   function fit(){
     var w=view.clientWidth;
     var h=view.clientHeight;
-
     var scale=Math.min(w/1920,h/1080);
-
-    stage.style.transform=
-      'translate(-50%,-50%) scale('+scale+')';
+    stage.style.transform='translate(-50%,-50%) scale('+scale+')';
   }
 
   window.addEventListener('resize',fit);
 
   document.addEventListener('fullscreenchange',function(){
     fit();
-
     $('fullscreen').textContent=
       document.fullscreenElement?'Sair da tela cheia':'Tela cheia';
   });
@@ -1483,40 +1230,29 @@ button:disabled{
     }
   });
 
-  /* ===================================================================
-     GRAVAÇÃO DA ANIMAÇÃO
-     Captura a área da prévia + áudio original.
-     =================================================================== */
-
   var recordBtn=$('record');
   var recording=false;
 
   async function recordAnimation(){
-
-    if(recording) return;
-
+    if(recording)return;
     if(!window.MediaRecorder){
       alert('Seu navegador não suporta gravação de vídeo.');
       return;
     }
-
     if(!HTMLCanvasElement.prototype.captureStream){
       alert('Seu navegador não suporta captura de vídeo.');
       return;
     }
-
     if(!window.html2canvas){
       alert('Não foi possível carregar a biblioteca de captura. Verifique sua conexão com a internet.');
       return;
     }
-
     if(!window.AudioContext&&!window.webkitAudioContext){
       alert('Seu navegador não suporta captura de áudio.');
       return;
     }
 
     recording=true;
-
     recordBtn.disabled=true;
     recordBtn.textContent='Preparando...';
 
@@ -1525,57 +1261,32 @@ button:disabled{
     var oldSound=soundOn;
 
     try{
-
-      // Contexto de áudio para juntar os sons da animação.
       var AudioCtx=window.AudioContext||window.webkitAudioContext;
-
       var audioCtx=new AudioCtx();
-
       await audioCtx.resume();
-
       var audioDestination=audioCtx.createMediaStreamDestination();
-
       var audioElements=[chest,$('sBanner')];
-
       var audioSources=[];
 
       audioElements.forEach(function(audio){
-
         var source=audioCtx.createMediaElementSource(audio);
-
         var gain=audioCtx.createGain();
-
         gain.gain.value=1;
-
         source.connect(gain);
-
         gain.connect(audioCtx.destination);
         gain.connect(audioDestination);
-
         audioSources.push(source);
       });
 
-      // Canvas exclusivo para gravar somente a prévia.
       var captureCanvas=document.createElement('canvas');
-
       captureCanvas.width=Math.max(640,view.clientWidth);
-      captureCanvas.height=Math.round(
-        captureCanvas.width*9/16
-      );
-
+      captureCanvas.height=Math.round(captureCanvas.width*9/16);
       var captureCtx=captureCanvas.getContext('2d');
-
       var videoStream=captureCanvas.captureStream(30);
-
       var audioTracks=audioDestination.stream.getAudioTracks();
+      audioTracks.forEach(function(track){videoStream.addTrack(track);});
 
-      audioTracks.forEach(function(track){
-        videoStream.addTrack(track);
-      });
-
-      // Escolha automática do formato.
       var mimeType='';
-
       var formats=[
         'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
         'video/mp4',
@@ -1602,123 +1313,63 @@ button:disabled{
       });
 
       var chunks=[];
-
       recorder.ondataavailable=function(e){
-        if(e.data&&e.data.size>0){
-          chunks.push(e.data);
-        }
+        if(e.data&&e.data.size>0)chunks.push(e.data);
       };
 
       var stopped=new Promise(function(resolve,reject){
-
         recorder.onstop=resolve;
-
         recorder.onerror=function(e){
           reject(e.error||new Error('Erro durante a gravação.'));
         };
-
       });
 
       function drawFrame(){
-
         return html2canvas(view,{
           backgroundColor:null,
           scale:1,
           logging:false,
           useCORS:true
         }).then(function(canvas){
-
-          captureCtx.clearRect(
-            0,0,captureCanvas.width,captureCanvas.height
-          );
-
-          captureCtx.drawImage(
-            canvas,
-            0,0,
-            captureCanvas.width,
-            captureCanvas.height
-          );
-
+          captureCtx.clearRect(0,0,captureCanvas.width,captureCanvas.height);
+          captureCtx.drawImage(canvas,0,0,captureCanvas.width,captureCanvas.height);
         });
-
       }
 
-      // Para qualquer reprodução anterior.
       playing=false;
       stopSounds();
-
-      if(!oldSound){
-        // A gravação respeita a opção de som desligado.
-        soundOn=false;
-      }else{
-        soundOn=true;
-      }
-
+      soundOn=oldSound;
       setT(0);
-
       await drawFrame();
-
       recorder.start(100);
-
       recordBtn.textContent='Gravando...';
-
-      // Inicia a animação original, incluindo o pré-roll do baú.
       start(0,true);
 
-      // Captura contínua dos frames.
       while(playing||preRollRemaining>0){
-
         await drawFrame();
-
-        await new Promise(function(resolve){
-          setTimeout(resolve,33);
-        });
-
+        await new Promise(function(resolve){setTimeout(resolve,33);});
       }
 
-      // Captura o último frame.
       await drawFrame();
-
       recorder.stop();
-
       await stopped;
 
-      // Libera as faixas.
-      videoStream.getTracks().forEach(function(track){
-        track.stop();
-      });
-
-      audioDestination.stream.getTracks().forEach(function(track){
-        track.stop();
-      });
-
+      videoStream.getTracks().forEach(function(track){track.stop();});
+      audioDestination.stream.getTracks().forEach(function(track){track.stop();});
       await audioCtx.close();
 
-      var blob=new Blob(chunks,{
-        type:mimeType
-      });
-
+      var blob=new Blob(chunks,{type:mimeType});
       var isMp4=mimeType.indexOf('mp4')!==-1;
-
       var extension=isMp4?'mp4':'webm';
-
       var url=URL.createObjectURL(blob);
-
       var link=document.createElement('a');
-
       link.href=url;
-
       link.download='Fortnite_Reward_Won.'+extension;
-
       document.body.appendChild(link);
-
       link.click();
-
       link.remove();
 
-      setTimeout(function(){
-        URL.revokeObjectURL(url);
-      },10000);
+      setTimeout(function(){URL.revokeObjectURL(url);},10000);
 
       alert(
         isMp4
@@ -1726,12 +1377,8 @@ button:disabled{
         : 'Gravação concluída! Seu navegador não oferece gravação MP4 pelo MediaRecorder, então o vídeo foi salvo em WebM.'
       );
 
-      // Restaura a reprodução anterior.
       soundOn=oldSound;
-
-      if(!oldSound){
-        stopSounds();
-      }
+      if(!oldSound)stopSounds();
 
       if(wasPlaying){
         start(oldT,true);
@@ -1742,49 +1389,28 @@ button:disabled{
       }
 
     }catch(error){
-
       console.error('Erro na gravação:',error);
-
-      alert(
-        'Não foi possível gravar a animação: '+
-        (error.message||error)
-      );
-
+      alert('Não foi possível gravar a animação: '+(error.message||error));
       playing=false;
       stopSounds();
-
       setT(oldT);
-
       soundOn=oldSound;
-
       play.textContent='Continuar';
 
     }finally{
-
       recording=false;
-
       recordBtn.disabled=false;
       recordBtn.textContent='Gravar animação';
-
     }
-
   }
 
   recordBtn.addEventListener('click',recordAnimation);
 
-  /* ===================================================================
-     Fontes
-     =================================================================== */
-
   if(document.fonts&&document.fonts.load){
-    document.fonts.load("900 48px 'Burbank Big Condensed'").then(function(){
+    document.fonts.load("900 48px 'Burbank Big Regular Black'").then(function(){
       render(t);
     });
   }
-
-  /* ===================================================================
-     Visualização inicial
-     =================================================================== */
 
   setT(3.6);
 
@@ -1793,9 +1419,7 @@ button:disabled{
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if(!reduce){
-    setTimeout(function(){
-      start(0,false);
-    },600);
+    setTimeout(function(){start(0,false);},600);
   }
 
 })();
