@@ -367,42 +367,33 @@ button:disabled{
   height:0;
 }
 
-#sideL,#sideR{display:none;}
+#sideL,#sideR{display:block;z-index:1;}
 
 .side{
-  width:350px;
+  width:512px;
   height:80px;
   top:-40px;
-  left:-175px;
+  left:-256px;
 }
 
 .side .lines{
   left:0;
   top:0;
-  width:350px;
+  width:512px;
   height:80px;
 }
 
-.side i{
+.side .bigLineTexture{
   display:block;
+  position:absolute;
   left:0;
-  width:350px;
-  transform-origin:0 50%;
-  background:linear-gradient(270deg,rgba(63,24,0,0) 0%,rgba(151,67,0,.55) 27%,rgba(255,173,20,.94) 73%,rgba(255,228,110,.98) 100%);
-}
-
-.side i.big{
-  top:29px;
-  height:19px;
-  clip-path:polygon(0 30%,72% 30%,84% 0,100% 12%,88% 50%,100% 86%,78% 100%,68% 67%,0 67%);
-  box-shadow:0 0 12px rgba(253,159,5,.42);
-}
-
-.side i.small{
-  top:49px;
-  height:3px;
-  background:linear-gradient(270deg,rgba(255,201,42,0) 0%,rgba(235,142,4,.68) 42%,#ffe483 100%);
-  box-shadow:0 0 8px rgba(255,205,58,.7);
+  top:-219px;
+  width:512px;
+  height:512px;
+  object-fit:fill;
+  transform-origin:50% 50%;
+  filter:drop-shadow(0 0 4px rgba(255,184,54,.9)) drop-shadow(0 0 10px rgba(255,128,20,.62)) drop-shadow(0 0 18px rgba(255,105,0,.3));
+  mix-blend-mode:screen;
 }
 
 .thunderLineTexture{
@@ -585,8 +576,7 @@ button:disabled{
 
             <div id="sideL" class="side">
               <div class="lines">
-                <i class="big"></i>
-                <i class="small"></i>
+                <img class="bigLineTexture" src="BigLineRemake.png" alt="" aria-hidden="true">
               </div>
             </div>
 
@@ -606,8 +596,7 @@ button:disabled{
 
             <div id="sideR" class="side">
               <div class="lines">
-                <i class="big"></i>
-                <i class="small"></i>
+                <img class="bigLineTexture" src="BigLineRemake.png" alt="" aria-hidden="true">
               </div>
             </div>
 
@@ -1090,28 +1079,28 @@ button:disabled{
 
     var nameW=el.name.offsetWidth;
     var borderW=(Math.max(nameW,el.won.offsetWidth)+20)*ev(a.brkW,t);
-    var sideCx=borderW/2+40+175;
+    var sideCx=borderW/2+40+256;
     var fb=Math.max(0,Math.min(1,(ev(a.fillBig,t)+.2)/1.2));
-    var fsm=Math.max(0,Math.min(1,(ev(a.fillSmall,t)+.2)/1.2));
     var gl=ev(a.glow,t);
     var sx=ev(a.sSx,t);
-    var sy=ev(a.sSy,t);
+    var sideScale=sx*.86;
 
     var rLines=el.sideR.firstElementChild;
     var lLines=el.sideL.firstElementChild;
-    rLines.children[0].style.transform='scaleX('+fb+')';
-    rLines.children[1].style.transform='scaleX('+fsm+')';
-    lLines.children[0].style.transform='scaleX('+fb+')';
-    lLines.children[1].style.transform='scaleX('+fsm+')';
-    rLines.style.transform='translateX('+ev(a.hOffR,t)+'px)';
-    lLines.style.transform='translateX('+ev(a.hOffL,t)+'px)';
+    var rightLine=rLines.firstElementChild;
+    var leftLine=lLines.firstElementChild;
+    leftLine.style.transform=rightLine.style.transform='scaleX('+fb+')';
+    rightLine.style.filter=leftLine.style.filter=
+      'drop-shadow(0 0 '+(3+gl*3)+'px rgba(255,184,54,.9)) '+
+      'drop-shadow(0 0 '+(7+gl*5)+'px rgba(255,128,20,.62)) '+
+      'drop-shadow(0 0 '+(13+gl*5)+'px rgba(255,105,0,.3))';
+    rLines.style.transform='translateX(0px)';
+    lLines.style.transform='translateX(0px)';
 
-    el.sideR.style.filter=el.sideL.style.filter=
-      'drop-shadow(0 '+(6*gl)+'px rgba(253,159,5,.85))';
     el.sideR.style.transform=
-      'translate('+(sideCx+ev(a.sRx,t))+'px,0) skewX('+ev(a.sRshear,t)+'deg) scale('+sx+','+sy+')';
+      'translate('+(sideCx-79)+'px,0) scale('+sideScale+','+sideScale+')';
     el.sideL.style.transform=
-      'translate('+(-sideCx+ev(a.sLx,t))+'px,0) skewX('+ev(a.sLshear,t)+'deg) scale('+(-sx)+','+sy+')';
+      'translate('+(-sideCx+79)+'px,0) scale('+(-sideScale)+','+sideScale+')';
 
     el.brk.style.opacity=ev(a.brkOp,t);
     el.brk.style.transform='translateY('+ev(a.brkTy,t)+'px)';
